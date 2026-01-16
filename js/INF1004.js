@@ -1,7 +1,7 @@
 //////////////////////////////////
 //VariablesConfigurables.js
 /////////////////////////////////
-const EXAM_NAME = "Examen de Fundamentos de TI - INF1004";
+const EXAM_NAME = "Examen final de Fundamentos de TI - INF1004";
 document.getElementById("title").textContent = EXAM_NAME;
 const EXAM_DURATION_MINUTES = 165; // Cambiar a 180 u otro valor si se desea
 const EXAM_STORAGE_KEY = "examData"; //Variable para guardar datos en el localStorage
@@ -12,11 +12,11 @@ const CLEAR_INTERVAL_DAYS = 1; // Tiempo en días de espera para poder borrar lo
 
 const MAX_ATTEMPTS = 3;                 // Intentos 
 const UNIQUE_QUESTIONS_COUNT = 25;      // Selección única 23x1 = 23 pts
-const DEVELOPMENT_QUESTIONS_COUNT = 20; // Desarrollo 20x2 = 40 pts
-                                        // Crucigrama 23 pts
+const DEVELOPMENT_QUESTIONS_COUNT = 10; // Desarrollo 20x2 = 20 pts
+// Crucigrama 23 pts
 const PRACTICE_QUESTIONS_PAREO = 14;    // Pareo 14x0.5 = 7 pts
 const PRACTICE_QUESTIONS_SOUP = 14;     // Soup   14x0.5 = 7 pts
-const ACCESS_CODE = "TikiNieve1";       // 12345 Código que se valida en script.js
+const ACCESS_CODE = "1";       // 12345 Código que se valida en script.js
 /////////////////////////////////
 
 //////////////////////////////////
@@ -1279,27 +1279,16 @@ dateElement.textContent = `Fecha: ${formattedDate}`;
 //PreguntasDesarrollo.js
 /////////////////////////////////
 const preguntasDesarrolloCompletas = [
-    "Explique cuales son las dos formas que pueden ser las bases de datos y de 2 ejemplos de cada una. (2 pts)",
-    "Explique que es una Base de Datos relacional, cuales son sus características y de 2 ejemplos de en donde se pueden realizar aplicaciones y ¿por qué? (2 pts)",
-    "Menciona tres tipos de computadoras y da un ejemplo de cada una. (2 pts)",
-    "Menciona tres Sistemas operativos según el tipo de dispositivo, da dos ejemplos y cuales distros existen en el mercado. (2 pts)",
-    "Menciona tres Sistemas operativos según su arquitectura, da dos ejemplos y cuales distros existen en el mercado. (2 pts)",
-    "Menciona tres Sistemas operativos según su interfaz, da un solo ejemplo y dos distros de las cuales existen en el mercado. (2 pts)",
-    "¿Qué significa CPU y cual es su funcionamiento y mencione 2 de sus categorías y un ejemplo de cada categoría que menciona? (2 pts)",
-    "¿Qué hace un profesional de TI en la actualidad, cuales son sus principales funciones?. (2 pts)",
-    "¿Qué significa GPU y para que sirve?. (2 pts)",
-    "¿Qué es una memoria Caché, cuales existen y mencione las diferencias de cada una?. (2 pts)",
-    "¿Cuál es la diferencia entre Datos e Información, de dos ejemplos?. (2 pts)",
-    "¿Qué es una base de datos y cuales son sus tipos?. (2 pts)",
-    "¿Mencione como han evolucionado las bases de datos, dé dos ejemplos y el año en que se evoluciono?. (2 pts)",
-    "¿Mencione 2 de los objetivos de las bases de datos y detallelos?. (2 pts)",
-    "¿Qué es 1-. Distribución de datos, 2-. Alta disponibilidad, 3-. Escalabilidad, 4-. Tolerancia a fallos y 5-.latencia reducida en una base de datos?. (2 pts)",
-    "¿Cuales arquitecturas existen en las bases de datos y detallelas?. (2 pts)",
-    "¿Cuales modelos(tipos) de bases de datos existen?. (2 pts)",
-    "¿Cuales son los 3 tipos de diseño de bases de datos que existen?. (2 pts)",
-    "Describa el tipo de estructura de las bases de datos relacionales. (2 pts)",
-    "Describa 1 características de las bases de datos no relacionales. (2 pts)",
-    "Describa 1 características de las bases de datos relacionales. (2 pts)",
+    "Analice cómo la combinación de firewalls, autenticación multifactor (MFA) y políticas de contraseñas contribuye a la defensa en profundidad de una red corporativa. Da ejemplos concretos de ataques que podrían ser mitigados por cada medida. (2 pts)",
+    "Explique el proceso de configuración segura de un router, desde la asignación de IPs hasta la implementación de SSH y ACLs, justificando la importancia de cada paso para la seguridad de la red. (2 pts)",
+    "Evalúe los riesgos y beneficios de utilizar gestores de contraseñas en entornos empresariales. ¿Cuáles son las mejores prácticas para su implementación y qué amenazas podrían surgir si no se gestionan adecuadamente? (2 pts)",
+    "Compare los protocolos HTTP y HTTPS en términos de seguridad, explicando cómo el cifrado impacta la confidencialidad e integridad de la información transmitida. (2 pts)",
+    "Describa un escenario realista de ataque de phishing dirigido a empleados de una empresa. Explica cómo la capacitación y las herramientas tecnológicas pueden reducir la probabilidad de éxito del ataque. (2 pts)",
+    "Analice las diferencias entre una LAN y una WAN en cuanto a amenazas y medidas de seguridad recomendadas. Incluye ejemplos de dispositivos y configuraciones específicas para cada caso. (2 pts)",
+    "Justifique la importancia de mantener actualizados los sistemas y dispositivos de red. ¿Qué vulnerabilidades pueden explotarse en sistemas desactualizados y cómo afectan a la organización? (2 pts)",
+    "Explique el funcionamiento de un sistema de detección de intrusos (IDS) como Snort y cómo puede integrarse con otras herramientas de seguridad para una protección integral de la red. (2 pts)",
+    "Propónga una política integral de uso seguro de dispositivos USB en una empresa, considerando controles técnicos y capacitación de usuarios. Explica cómo esta política previene incidentes de seguridad. (2 pts)",
+    "Analice el impacto de la segmentación de red mediante VLANs en la seguridad y eficiencia operativa de una organización. Incluye ventajas, desventajas y recomendaciones de implementación. (2 pts)",
 ];
 
 // Función para seleccionar preguntas únicas aleatorias 
@@ -1813,274 +1802,389 @@ let studentAnswers = [];
 
 const uniqueQuestions = [
     {
-        question: "¿En el orden que lleva ensamblar un PC, nos enfocaremos en el Procesador; ¿Qué orden 1ro, 2do, 3ro y 4to paso llevaría ensamblarlo si nos queda solamente el procesador de instalar, según las siguientes opciones? (1 pts)",
+        question: "¿Cuál es la principal diferencia entre un firewall de hardware y uno de software? (1 pts)",
         options: [
-            "1- Refrigeración (ventilador y Disipador de calor), 2- Procesador (CPU), 3- Pasta térmica, 4- Bajar el seguro del socket.",
-            "1- Bajar el seguro del socket, 2- Procesador (CPU), 3- Pasta térmica, 4- Refrigeración (ventilador y Disipador de calor).",
-            "1- Procesador (CPU), 3- Bajar el seguro del socket, 2- Pasta térmica, 4- Refrigeración (ventilador y Disipador de calor). ",
-            "1- Pasta térmica, 2- Bajar el seguro del socket, 3- Refrigeración (ventilador y Disipador de calor), 4- Procesador (CPU)."
+            "El de hardware protege solo dispositivos móviles, el de software solo computadoras.",
+            "El de hardware filtra el tráfico antes de llegar al dispositivo, el de software lo hace d,entro del SO.",
+            "Ambos funcionan igual, pero el de software es más caro.",
+            "El de hardware solo bloquea virus, el de software bloquea todo tipo de amenazas."
+
         ],
-        correct: "1- Procesador (CPU), 3- Bajar el seguro del socket, 2- Pasta térmica, 4- Refrigeración (ventilador y Disipador de calor). "
+        correct: "El de hardware filtra el tráfico antes de llegar al dispositivo, el de software lo hace d,entro del SO."
     },
     {
-        question: "¿Cuál de las siguientes opciones describe mejor la función de la memoria RAM en una computadora? (1 pts)",
+        question: "¿Cuál de las siguientes prácticas no son recomendables al usar un dispositivo USB? (1 pts)",
         options: [
-            "Almacenar datos de manera permanente.",
-            "Ejecutar programas y almacenar temporalmente datos en uso.",
-            "Mejorar la velocidad de internet.",
-            "Guardar archivos en la nube."
+            "Escanear el USB con un antivirus actualizado antes de abrir archivos.",
+            "Solo usar USBs de marca reconocida.",
+            "Conectar dispositivos USB desconocidos o de procedencia incierta.",
+            "Compartir el USB con múltiples usuarios."
+
         ],
-        correct: "Ejecutar programas y almacenar temporalmente datos en uso."
+        correct: "Conectar dispositivos USB desconocidos o de procedencia incierta."
     },
     {
-        question: "¿Qué tipo de memoria se utiliza para almacenar datos que no cambian y permiten el arranque del sistema? (1 pts)",
+        question: "¿Qué característica distingue a la autenticación multifactor (MFA) de una autenticación tradicional? (1 pts)",
         options: [
-            "Memoria RAM",
-            "Memoria Caché",
-            "Memoria ROM",
-            "Memoria Virtual"
+            "Solo requiere una contraseña larga y compleja con letras, números y símbolos.",
+            "Combina al menos dos métodos de verificación independientes.",
+            "Solo utiliza preguntas de seguridad.",
+            "Hace uso exclusivo de tokens físicos."
+
         ],
-        correct: "Memoria ROM"
+        correct: "Combina al menos dos métodos de verificación independientes."
     },
     {
-        question: "¿Cuál es la principal ventaja de un SSD frente a un disco duro (HDD)? (1 pts)",
+        question: "¿Cuál es la principal función de una ACL (Access Control List) en un Router? (1 pts)",
         options: [
-            "Mayor capacidad de almacenamiento.",
-            "Mayor velocidad de lectura y escritura.",
-            "Menor consumo de energía.",
-            "Todas las anteriores."
+            "Restringir el tráfico según reglas definidas por el administrador.",
+            "Actualizar el firmware automáticamente.",
+            "Deshabilitar Telnet y habilitar SSH.",
+            "Cifrar el tráfico de red."
+
         ],
-        correct: "Mayor velocidad de lectura y escritura."
+        correct: "Restringir el tráfico según reglas definidas por el administrador."
     },
     {
-        question: "¿Qué tipo de memoria es utilizada por las tarjetas gráficas para procesar imágenes y gráficos? (1 pts)",
+        question: "¿Qué protocolo se utiliza para asignar direcciones IP dinámicamente en una red? (1 pts)",
         options: [
-            "Memoria Caché",
-            "Memoria flash",
-            "VRAM",
-            "Memoria ROM"
+            "FTP.",
+            "DHCP.",
+            "HTTP.",
+            "SMTP."
+
         ],
-        correct: "VRAM"
+        correct: "DHCP"
     },
     {
-        question: "¿Cuál de las siguientes afirmaciones sobre la memoria caché es correcta? (1 pts)",
+        question: "¿Cuál de los siguientes ataques busca saturar los recursos de un sistema hasta dejarlo inoperante? (1 pts)",
         options: [
-            "Es más rápida que la RAM y almacena datos de uso frecuente para el procesador.",
-            "Es utilizada exclusivamente para almacenar archivos del sistema operativo.",
-            "Solo se encuentra en dispositivos móviles.",
-            "Su función principal es ampliar la memoria de almacenamiento."
+            "Phishing.",
+            "DoS/DDoS.",
+            "Spyware.",
+            "Sniffing."
+
         ],
-        correct: "Es más rápida que la RAM y almacena datos de uso frecuente para el procesador."
+        correct: "DoS/DDos"
     },
     {
-        question: "¿Cuál de las siguientes afirmaciones sobre la memoria virtual es la correcta? (1 pts)",
+        question: "¿Qué elemento NO es recomendable incluir en una contraseña segura? (1 pts)",
         options: [
-            "Es un tipo de memoria física integrada en la placa base.",
-            "Se utiliza cuando la RAM se llena, almacenando temporalmente datos en el disco duro o SSD.",
-            "Es un tipo de memoria ROM que guarda configuraciones del sistema.",
-            "Solo se encuentra en supercomputadoras."
+            "Letras mayúsculas y minúsculas.",
+            "Caracteres especiales.",
+            "Secuencias numéricas como “12345678”.",
+            "Longitud superior a 12 caracteres."
+
         ],
-        correct: "Se utiliza cuando la RAM se llena, almacenando temporalmente datos en el disco duro o SSD."
+        correct: "Secuencias numéricas como “12345678”."
     },
     {
-        question: "¿Qué hace que la memoria SRAM (Static RAM) sea más eficiente que la DRAM (Dynamic RAM)? (1 pts)",
+        question: "¿Cuál es la principal ventaja de usar gestores de contraseñas? (1 pts)",
         options: [
-            "No necesita ser actualizada constantemente, lo que la hace más rápida.",
-            "Se utiliza en dispositivos de almacenamiento como SSD y USB.",
-            "Tiene mayor capacidad de almacenamiento que la RAM convencional.",
-            "Se encuentra únicamente en tarjetas gráficas."
+            "Ayudan a crearlas y permiten guardarlas fácilmente.",
+            "Generan y almacenan contraseñas complejas y únicas para cada servicio.",
+            "Hacen que la autenticación en dos pasos no sea necesaria.",
+            "Hacen innecesario el uso de firewalls."
+
         ],
-        correct: "No necesita ser actualizada constantemente, lo que la hace más rápida"
+        correct: "Generan y almacenan contraseñas complejas y únicas para cada servicio."
     },
     {
-        question: "¿Qué tipo de almacenamiento se conecta directamente a la placa base sin necesidad de cables? (1 pts)",
+        question: "¿Qué función cumple el cifrado en la seguridad de red? (1 pts)",
         options: [
-            "Disco Duro (HDD).",
-            "Memoria Caché.",
-            "Unidad M.2.",
-            "Memoria Virtual."
+            "Permitir el acceso remoto sin autenticación.",
+            "Proteger la confidencialidad de los datos transmitidos.",
+            "Incrementar la velocidad de la red.",
+            "Eliminar virus automáticamente."
+
         ],
-        correct: "Unidad M.2."
+        correct: "Proteger la confidencialidad de los datos transmitidos."
     },
     {
-        question: "¿Cuál es la diferencia principal entre datos e información? (1 pts)",
+        question: "¿Cuál de las siguientes opciones representa un ejemplo de amenaza de integridad en la red? (1 pts)",
         options: [
-            "Los datos son hechos sin procesar, mientras que la información es el resultado de su análisis.",
-            "La información es siempre numérica, mientras que los datos pueden ser de cualquier tipo.",
-            "Los datos solo se utilizan en sistemas de ciberseguridad.",
-            "La información no se puede modificar una vez generada."
+            "Robo de credenciales por phishing.",
+            "Modificación no autorizada de archivos durante la transmisión.",
+            "Interrupción del servicio por DoS.",
+            "Acceso físico no autorizado al servidor."
+
         ],
-        correct: "Los datos son hechos sin procesar, mientras que la información es el resultado de su análisis."
+        correct: "Modificación no autorizada de archivos durante la transmisión."
     },
     {
-        question: "¿Cuál de los siguientes elementos NO es parte de un sistema de información? (1 pts)",
+        question: "¿Qué herramienta permite analizar el tráfico de red para detectar amenazas en tiempo real? (1 pts)",
         options: [
-            "Hardware.",
-            "Software.",
-            "Redes sociales.",
-            "Datos."
+            "Lucidchart.",
+            "Packet Tracer.",
+            "ERDPlus.",
+            "Wireshark."
+
         ],
-        correct: "Hardware."
+        correct: "Wireshark"
     },
     {
-        question: "¿Cuál es un ejemplo de almacenamiento de datos en un sistema de información? (1 pts)",
+        question: "¿Cuál es la mejor práctica al recibir un correo sospechoso que solicita tus credenciales? (1 pts)",
         options: [
-            "El procesamiento de datos en tiempo real.",
-            "La conversión de datos en gráficos y reportes.",
-            "Guardar información en una base de datos para su acceso futuro.",
-            "La eliminación permanente de registros antiguos."
+            "Responder inmediatamente para aclarar dudas.",
+            "Hacer clic en los enlaces para verificar su autenticidad.",
+            "Ignorar el correo y reportarlo como phishing.",
+            "Compartirlo con colegas para pedir opinión."
+
         ],
-        correct: "Guardar información en una base de datos para su acceso futuro."
+        correct: "Ignorar el correo y reportarlo como Phishing"
     },
     {
-        question: "¿Cuál de los siguientes ejemplos representa un proceso dentro de un sistema de información bancario? (1 pts)",
+        question: "¿Qué capa del modelo TCP/IP se encarga de la entrega de paquetes entre dispositivos en diferentes redes? (1 pts)",
         options: [
-            "Historial de transacciones almacenado en la base de datos.",
-            "Clientes que utilizan la banca en línea.",
-            "Realizar transferencias y pagos de servicios.",
-            "Servidores que alojan la plataforma del banco."
+            "Aplicación.",
+            "Red (Internet).",
+            "Enlace de datos.",
+            "Física."
+
         ],
-        correct: "Realizar transferencias y pagos de servicios."
+        correct: "Red (Internet)."
     },
     {
-        question: "¿Qué es una base de datos? (1 pts)",
+        question: "¿Cuál de los siguientes NO es un método de autenticación de doble factor? (1 pts)",
         options: [
-            "Un sistema que solo almacena información en papel.",
-            "Un conjunto de hojas de cálculo sin estructura definida.",
-            "Un sistema que almacena organiza y gestiona información de manera estructurada.",
-            "Un software exclusivo de redes sociales."
+            "Contraseña + SMS.",
+            "Contraseña + token físico.",
+            "Contraseña + pregunta de seguridad.",
+            "Contraseña + app de autenticación."
+
         ],
-        correct: "Un sistema que almacena organiza y gestiona información de manera estructurada."
+        correct: "Contraseña + pregunta de seguridad."
     },
     {
-        question: "¿Cuál es una de las principales funciones de una base de datos? (1 pts)",
+        question: "¿Qué tipo de red conecta dispositivos dentro de un área geográfica limitada, como un edificio? (1 pts)",
         options: [
-            "Facilitar el acceso y gestión eficiente de la información.",
-            "Eliminar la necesidad de almacenar información.",
-            "Asegurar que los datos sean completamente privados sin excepciones.",
-            "Reemplazar los sistemas operativos en las computadoras."
+            "WAN.",
+            "LAN.",
+            "MAN.",
+            "PAN."
+
         ],
-        correct: "facilitar el acceso y gestión eficiente de la información."
+        correct: "LAN."
     },
     {
-        question: "¿Cómo organizan los datos las bases de datos relacionales? (1 pts)",
+        question: "¿Cuál es la principal función de un switch en una red LAN? (1 pts)",
         options: [
-            "En documentos de texto plano.",
-            "En archivos separados sin relaciones.",
-            "En tablas con filas y columnas.",
-            "En nodos interconectados sin estructura fija."
+            "Asignar direcciones IP públicas.",
+            "Conectar dispositivos y gestionar el tráfico dentro de la red local.",
+            "Proveer acceso inalámbrico.",
+            "Cifrar todo el tráfico de red."
+
         ],
-        correct: "EN tablas con filas y columnas."
+        correct: "Conectar dispositivos y gestionar el tráfico dentro de la red local."
     },
     {
-        question: "¿Cuál es una característica clave de las bases de datos relacionales? (1 pts)",
+        question: "¿Qué acción es fundamental para mantener la disponibilidad de los servicios en una red? (1 pts)",
         options: [
-            "Utilizan grafos para conectar datos.",
-            "No permiten consultas estructuradas.",
-            "Organizan la información en tablas con relaciones entre datos.",
-            "No pueden escalar a grandes volúmenes de datos."
+            "Usar contraseñas simples.",
+            "Compartir credenciales entre usuarios.",
+            "Deshabilitar el firewall.",
+            "Implementar redundancia y copias de seguridad."
+
         ],
-        correct: "Organizan la información en tablas con relaciones entre datos."
+        correct: "Implementar redundancia y copias de seguridad."
     },
     {
-        question: "¿Para qué surgieron las bases de datos NoSQL? (1 pts)",
+        question: "¿Cuál es el riesgo principal de no actualizar el software de red regularmente? (1 pts)",
         options: [
-            "Para manejar datos estructurados en tablas rígidas.",
-            "Para gestionar datos no estructurados, como JSON y documentos.",
-            "Para reemplazar completamente las bases de datos relacionales.",
-            "Solo para almacenar imágenes y videos."
+            "Exposición a vulnerabilidades conocidas.",
+            "Disminución de la velocidad de la red.",
+            "Pérdida de compatibilidad con dispositivos antiguos.",
+            "Consumo excesivo de energía."
+
         ],
-        correct: "Para gestionar datos no estructurados, como JSON y documentos."
+        correct: "Exposición a vulnerabilidades conocidas."
     },
     {
-        question: "¿Cuales de estos no son todos componentes físicos de un equipo de computo? (1 pts)",
+        question: "¿Qué protocolo se utiliza para transferir archivos de manera segura en una red? (1 pts)",
         options: [
-            "Fuente de poder, Cooler, Procesador, Memoria RAM, Disco Duro, Tarjeta de Video.",
-            "Procesador, Memoria RAM, Unidad óptica, Gabinete, Placa madre, Tarjeta de audio",
-            "Puertos USB, Wifi, Fuente de poder, Disco Duro, Gabinete, Tarjeta de Video",
-            "Disco Duro, Fuente de poder, Procesador, Memoria RAM, Gabinete, Tarjeta de Video"
+            "HTTP.",
+            "FTP.",
+            "SMTP.",
+            "SFTP."
+
         ],
-        correct: "Puertos USB, Wifi, Fuente de poder, Disco Duro, Gabinete, Tarjeta de Video"
+        correct: "SFTP"
     },
     {
-        question: "¿Cuales de los siguientes dispositivos son de entrada? (1 pts)",
+        question: "¿Cuál es el principal objetivo del principio de confidencialidad en seguridad de red? (1 pts)",
         options: [
-            "Monitor",
-            "Memoria RAM",
-            "Módem",
-            "Lector de tarjetas inteligentes(Smart Card)"
+            "Garantizar que los datos estén siempre disponibles.",
+            "Prevenir la modificación no autorizada de información.",
+            "Impedir el acceso no autorizado a la información.",
+            "Asegurar la integridad de los dispositivos."
+
         ],
-        correct: "Lector de tarjetas inteligentes(Smart Card)"
+        correct: "Impedir el acceso no autorizado a la información."
     },
     {
-        question: "Cuales de los siguientes dispositivos son de Salida? (1 pts)",
+        question: "¿Qué medida es más efectiva para protegerse del phishing? (1 pts)",
         options: [
-            "Plotter",
-            "Joystik",
-            "Sensor de movimiento",
-            "trackball"
+            "Usar siempre la misma contraseña.",
+            "Verificar la URL y remitente antes de ingresar datos.",
+            "Desactivar el firewall.",
+            "Compartir información personal en redes sociales."
+
         ],
-        correct: "Plotter"
+        correct: "Verificar la URL y remitente antes de ingresar datos."
     },
     {
-        question: "Cuales de los siguientes dispositivos son Mixtos (Entrada y salida)? (1 pts)",
+        question: "¿Cuál es la función principal de un router en una red doméstica? (1 pts)",
         options: [
-            "Módem",
-            "Parlantes / Altavoces",
-            "Lapiz óptico / stylus",
-            "Escáner"
+            "Conectar dispositivos a Internet y enviar información desde internet a los dispositivos personales.",
+            "Proveer direcciones MAC y gestionar la configuración que envía el proveedor de servicio.",
+            "Analizar el tráfico de red.",
+            "Recibir, enviar y almacenar archivos compartidos."
+
         ],
-        correct: "Módem"
+        correct: "Conectar dispositivos a Internet y enviar información desde internet a los dispositivos personales."
     },
     {
-        question: "¿Que es L1, L2, L3? (1 pts)",
+        question: "¿Qué diferencia clave existe entre LAN y WAN? (1 pts)",
         options: [
-            "Memoria RAM",
-            "Memoria Lógica 123 de IA",
-            "Memoria Caché",
-            "Memoria ROM"
+            "La LAN es inalámbrica y la WAN es cableada.",
+            "La LAN cubre áreas pequeñas, la WAN cubre grandes distancias.",
+            "La LAN usa solo switches, la WAN solo routers.",
+            "La WAN no utiliza protocolos de comunicación."
+
         ],
-        correct: "Memoria Caché"
+        correct: "La LAN cubre áreas pequeñas, la WAN cubre grandes distancias."
     },
     {
-        question: "¿Cuál de las siguientes afirmaciones sobre el Archivo de Paginación es la correcta? (1 pts)",
+        question: "¿Qué acción debe realizarse al configurar SSH en un router para máxima seguridad? (1 pts)",
         options: [
-            "Es un tipo de memoria física integrada en la placa base.",
-            "Se utiliza cuando la RAM se llena, almacenando temporalmente datos en el disco duro o SSD.",
-            "Es un archivo que contiene información sobre la ubicación de todos los archivos en la unidad de almacenamiento.",
-            "Es un tipo de memoria ROM que guarda configuraciones del sistema."
+            "Usar contraseñas encriptadas y haciendo pool en DHCP.",
+            "Habilitar Telnet y no generar claves RSA",
+            "No compartiendo el usuario admin con todos los empleados.",
+            "Generar claves RSA y deshabilitar Telnet.",
+
         ],
-        correct: "Es un archivo que contiene información sobre la ubicación de todos los archivos en la unidad de almacenamiento."
+        correct: "Generar claves RSA y deshabilitar Telnet."
     },
     {
-        question: "¿Cuál de las siguientes afirmaciones sobre Memoria Flash es la correcta? (1 pts)",
+        question: "¿Cuál es el propósito de segmentar una red mediante VLANs? (1 pts)",
         options: [
-            "Forma de almacenamiento no volátil basada en semiconductores. Es utilizada en dispositivos como memorias USB, tarjetas SD y SSD.",
-            "Fundamental para el rendimiento gráfico en aplicaciones como videojuegos, edición de video y diseño 3D.",
-            "Memoria ultrarrápida para almacenar datos frecuentemente usados por el procesador.",
-            "Almacenamiento a largo plazo."
+            "Mejorar la velocidad de Internet.",
+            "Separar el tráfico y aumentar la seguridad interna.",
+            "Permitir el acceso sin autenticación.",
+            "Eliminar la necesidad de firewalls.",
+
         ],
-        correct: "Forma de almacenamiento no volátil basada en semiconductores. Es utilizada en dispositivos como memorias USB, tarjetas SD y SSD."
+        correct: "Separar el tráfico y aumentar la seguridad interna."
     },
     {
-        question: "¿Cuál de las siguientes afirmaciones sobre Memoria de Video es la correcta? (1 pts)",
+        question: "¿Qué herramienta es ideal para realizar pruebas de penetración y evaluar la seguridad de una red? (1 pts)",
         options: [
-            "Memoria ultrarrápida para almacenar datos frecuentemente usados por el procesador.",
-            "Memoria especializada utilizada en tarjetas gráficas (GPU) para almacenar imágenes, texturas, y otros datos gráficos.",
-            "Memoria principal para ejecutar programas.",
-            "Almacenamiento no volátil, utilizado en dispositivos USB y SSD"
+            "Bridges TCP/IP.",
+            "Webflow.",
+            "Post-Man.",
+            "Kali Linux.",
+
         ],
-        correct: "Memoria especializada utilizada en tarjetas gráficas (GPU) para almacenar imágenes, texturas, y otros datos gráficos."
+        correct: "Kali Linux."
     },
     {
-        question: "En bases de datos para que sirve NoSQL (Not Only SQL)? (1 pts)",
+        question: "¿Cuál es la consecuencia de no cifrar las contraseñas en la configuración de un router? (1 pts)",
         options: [
-            "Permite almacenar y acceder a datos desde cualquier lugar",
-            "Impulsa nueva technología para procesar información en grandes volúmenes",
-            "Surge para manejar datos no estructurados y complejos como JSON y documentos XML",
-            "Permiten almacenar datos en forma de objetos, en lugar de solo tablas."
+            "Empeora la velocidad de acceso.",
+            "Da problemas con acceso no autorizado y a la configuración.",
+            "Reduce el consumo de energía.",
+            "Aumenta la incompatibilidad con dispositivos antiguos.",
+
         ],
-        correct: "Surge para manejar datos no estructurados y complejos como JSON y documentos XML"
+        correct: "Da problemas con acceso no autorizado y a la configuración."
+    },
+    {
+        question: "¿Qué tipo de amenaza representa un software espía (spyware)? (1 pts)",
+        options: [
+            "Robo de información y monitoreo de actividades.",
+            "Interrupción de servicio.",
+            "Al lograr entrar da problemas de saturación de la red.",
+            "Interrupción espiando y bloqueando los puertos de la PC.",
+
+        ],
+        correct: "Robo de información y monitoreo de actividades."
+    },
+    {
+        question: "¿Cuál es el primer paso para mitigar un ataque de acceso no autorizado en un Router? (1 pts)",
+        options: [
+            "Guardar la contraseña en un block de notas.",
+            "Deshabilitar Telnet y habilitar SSH.",
+            "Reiniciar el router.",
+            "Eliminar todas las contraseñas.",
+
+        ],
+        correct: "Deshabilitar Telnet y habilitar SSH."
+    },
+    {
+        question: "¿Qué configuración en el navegador ayuda a proteger la privacidad del usuario? (1 pts)",
+        options: [
+            "Solo acceder desde Google.",
+            "Desactivar la navegación segura",
+            "Bloquear cookies de terceros y activar navegación segura",
+            "Borrar el historial de navegación",
+
+        ],
+        correct: "Bloquear cookies de terceros y activar navegación segura"
+    },
+    {
+        question: "¿Qué técnica ayuda a detectar intentos de intrusión en una red? (1 pts)",
+        options: [
+            "Uso de hojas de cálculo",
+            "Monitoreo con sistemas IDS como Snort",
+            "Compartir contraseñas por correo",
+            "Deshabilitar el firewall",
+
+        ],
+        correct: "Monitoreo con sistemas IDS como Snort"
+    },
+    {
+        question: "¿Cuál es el riesgo de usar la misma contraseña en varias cuentas? (1 pts)",
+        options: [
+            "No hay riesgo si la contraseña es compleja.",
+            "Si una cuenta es comprometida, todas las demás quedan vulnerables.",
+            "Mejora la seguridad por ser fácil de recordar.",
+            "Permite acceso más rápido a los servicios.",
+
+        ],
+        correct: "Si una cuenta es comprometida, todas las demás quedan vulnerables."
+    },
+    {
+        question: "¿Qué acción se recomienda antes de abrir archivos de un USB recibido de una fuente desconocida? (1 pts)",
+        options: [
+            "Escanear el USB con un antivirus actualizado.",
+            "Abrir todos los archivos inmediatamente.",
+            "Preguntar de quien es el USB.",
+            "Abrir archivos y luego escanear el USB.",
+
+        ],
+        correct: "Escanear el USB con un antivirus actualizado."
+    },
+    {
+        question: "¿Cuál es el propósito de un laboratorio de simulación con Packet Tracer en seguridad de red? (1 pts)",
+        options: [
+            "Practicar configuración y pruebas de seguridad en un entorno controlado.",
+            "Crear la red que me da el servicio contratado.",
+            "Descargar archivos de Internet sin restricciones.",
+            "Eliminar la necesidad de firewalls.",
+
+        ],
+        correct: "Practicar configuración y pruebas de seguridad en un entorno controlado."
+    },
+    {
+        question: "¿Qué medida de seguridad es esencial al administrar redes en una organización? (1 pts)",
+        options: [
+            "Permitir acceso remoto sin restricciones",
+            "Implementar políticas de contraseñas seguras y autenticación multifactor",
+            "Compartir credenciales administrativas",
+            "Desactivar actualizaciones automáticas.",
+
+        ],
+        correct: "Implementar políticas de contraseñas seguras y autenticación multifactor"
     },
 ];
 
@@ -2253,7 +2357,7 @@ function nextQuestion() {
                     icon: 'swal-instrucciones-icon',
                     htmlContainer: 'swal-instrucciones-text'
                 },
-                
+
                 // Forzar scroll arriba
                 didOpen: () => {
                     const popup = document.querySelector('swal-instrucciones');
@@ -2265,7 +2369,7 @@ function nextQuestion() {
                 localStorage.setItem("parte1Finalizada", "true");  // <-- guardamos la bandera
                 document.getElementById("uniqueSelection").style.display = "none"; // Ocultar sección de selección única
                 document.getElementById("essay").style.display = "block"; // Mostrar sección de desarrollo
-                
+
                 // Solo inicializar preguntas aleatorias si no existen
                 const savedQuestions = localStorage.getItem("preguntasDesarrolloSeleccionadas");
                 if (!savedQuestions) {
