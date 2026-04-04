@@ -691,6 +691,7 @@ function setupEventListeners() {
             // 1. Bloqueo y Feedback inicial
             btnDescargarFinal.disabled = true;
             btnDescargarFinal.style.opacity = "0.7";
+            btnDescargarFinal.style.cursor = "wait";
             btnDescargarFinal.innerText = "Generando PDF...";
 
             // 2. Lógica original
@@ -699,7 +700,7 @@ function setupEventListeners() {
 
             // 3. Simulación de carga para que el usuario vea el cambio
             // Esto evita que piensen que no le dieron clic
-            await esperar(2000); 
+            await esperar(3000); 
 
             // 4. Estado final
             btnDescargarFinal.innerText = "¡Resumen Descargado!";
@@ -708,7 +709,7 @@ function setupEventListeners() {
             
             // Opcional: Rehabilitar después de unos segundos si quieres que puedan reintentar
             setTimeout(() => {
-                btnDescargarFinal.disabled = false;
+                btnDescargarFinal.disabled = true;
                 btnDescargarFinal.style.opacity = "1";
             }, 3000);
         });
@@ -772,6 +773,12 @@ function setupEventListeners() {
                 btnDescargarPracticaPKA.innerText = "¡Archivos para práctica final descargados!";
                 btnDescargarPracticaPKA.style.backgroundColor = "#28a745";
                 btnDescargarPracticaPKA.style.color = "white";
+
+                // Opcional: Rehabilitar después de unos segundos si quieres que puedan reintentar
+                setTimeout(() => {
+                    btnDescargarFinal.disabled = true;
+                    btnDescargarFinal.style.opacity = "1";
+                }, 3000);
 
             } catch (error) {
                 console.error("Error en el proceso:", error);
