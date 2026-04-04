@@ -11,8 +11,8 @@ const MAX_CLEAR_USES = 1; // Cambia a 2 o 3 si deseas permitir más usos
 const CLEAR_INTERVAL_DAYS = 1; // Tiempo en días de espera para poder borrar los datos
 
 const MAX_ATTEMPTS = 15;                 // Intentos 
-const UNIQUE_QUESTIONS_COUNT = 25;      // Selección única 23x1 = 23 pts
-const DEVELOPMENT_QUESTIONS_COUNT = 10; // Desarrollo 20x2 = 20 pts
+const UNIQUE_QUESTIONS_COUNT = 20;      // Selección única 20x1 = 20 pts
+const DEVELOPMENT_QUESTIONS_COUNT = 5; // Desarrollo 10x2 = 20 pts
 // Crucigrama 23 pts
 const PRACTICE_QUESTIONS_PAREO = 14;    // Pareo 14x0.5 = 7 pts
 const PRACTICE_QUESTIONS_SOUP = 14;     // Soup   14x0.5 = 7 pts
@@ -688,6 +688,25 @@ function setupEventListeners() {
             localStorage.setItem("pdfDescargado", "true");
         });
     }
+
+    // Botón descargar final
+    const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
+    if (btnDescargarPracticaPKA) {
+        btnDescargarPracticaPKA.addEventListener("click", function () {
+            // Marcar que el PDF se descargó
+            localStorage.setItem("PDF y PKA descargargos", "true");
+            
+            const linkPractica = document.createElement("a");
+            linkPractica.href = "documents/Examen_#2_Practica-PacketTracer_INF1004_FundamentosTI.pdf";
+            linkPractica.download = "Examen_#2_Practica-PacketTracer_INF1004_FundamentosTI.pdf";
+
+            linkPractica.href = "documents/Examen Tercera Parte Fundamentos TI.pka";
+            linkPractica.download = "Examen Tercera Parte Fundamentos TI.pka";
+
+            linkPractica.click();
+        });
+    }
+
 }
 
 // Función para mostrar instrucciones importantes
