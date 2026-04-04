@@ -689,56 +689,54 @@ function setupEventListeners() {
         });
     }
 
-    // Función auxiliar para crear una pausa real
+    // Función para generar la pausa
     const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
 
     if (btnDescargarPracticaPKA) {
-        // Usamos 'async' para poder usar 'await'
         btnDescargarPracticaPKA.addEventListener("click", async function () {
             
-            // 1. Bloqueo inmediato: Deshabilitamos el botón para evitar doble clic
+            // 1. Bloqueo para evitar doble clic y saturación
             btnDescargarPracticaPKA.disabled = true;
-            btnDescargarPracticaPKA.innerText = "Descargando...";
-            btnDescargarPracticaPKA.style.opacity = "0.5";
+            btnDescargarPracticaPKA.style.opacity = "0.6";
             btnDescargarPracticaPKA.style.cursor = "not-allowed";
-
-            // 2. Guardar estado en localStorage
+            
             localStorage.setItem("PDF y PKA descargados", "true");
 
+            // Función interna para disparar la descarga
+            const descargarArchivo = (ruta, nombre) => {
+                const link = document.createElement("a");
+                link.href = ruta;
+                link.download = nombre;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+
             try {
-                // --- DESCARGA DEL PDF ---
-                const linkPDF = document.createElement("a");
-                linkPDF.href = "documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
-                linkPDF.download = "Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
-                document.body.appendChild(linkPDF);
-                linkPDF.click();
-                document.body.removeChild(linkPDF);
+                // --- PASO 1: Descargar PDF ---
+                btnDescargarPracticaPKA.innerText = "Descargando PDF (1/2)...";
+                descargarArchivo("documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf", "Examen_Instrucciones.pdf");
 
-                // 3. EL WAIT: Esperamos 1.5 segundos antes de la siguiente descarga
-                // Esto da respiro al navegador y evita que se bloqueen entre sí
-                await esperar(1500);
+                // --- PASO 2: EL WAIT CRÍTICO ---
+                // 3000ms (3 segundos) suele ser el límite donde el navegador 
+                // deja de considerar que es una ráfaga automática sospechosa.
+                await esperar(3000);
 
-                // --- DESCARGA DEL PKA ---
-                const linkPKA = document.createElement("a");
-                linkPKA.href = "documents/Examen-Tercera-Parte-Fundamentos-TI.pka";
-                linkPKA.download = "Examen-Tercera-Parte-Fundamentos-TI.pka";
-                document.body.appendChild(linkPKA);
-                linkPKA.click();
-                document.body.removeChild(linkPKA);
+                // --- PASO 3: Descargar PKA ---
+                btnDescargarPracticaPKA.innerText = "Descargando PKA (2/2)...";
+                descargarArchivo("documents/Examen-Tercera-Parte-Fundamentos-TI.pka", "Examen_Laboratorio.pka");
 
-                // 4. Espera final de cortesía antes de reactivar el botón
-                await esperar(2000);
+                // --- PASO 4: Finalización ---
+                await esperar(1000);
+                btnDescargarPracticaPKA.innerText = "Archivos Descargados";
+                btnDescargarPracticaPKA.style.backgroundColor = "#28a745"; // Color verde de éxito
 
             } catch (error) {
-                console.error("Error en las descargas:", error);
-            } finally {
-                // 5. Reactivamos el botón después de que todo el proceso terminó
+                console.error("Error en el proceso:", error);
+                btnDescargarPracticaPKA.innerText = "Error en descarga";
                 btnDescargarPracticaPKA.disabled = false;
-                btnDescargarPracticaPKA.innerText = "Descargar Resumen PDF"; // O el texto que tenías
-                btnDescargarPracticaPKA.style.opacity = "1";
-                btnDescargarPracticaPKA.style.cursor = "pointer";
             }
         });
     }
