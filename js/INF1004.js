@@ -697,8 +697,8 @@ function setupEventListeners() {
             localStorage.setItem("PDF y PKA descargargos", "true");
             
             const linkPractica = document.createElement("a");
-            linkPractica.href = "documents/Examen_Practica-PacketTracer_INF1004_FundamentosTI.pdf";
-            linkPractica.download = "Examen_Practica-PacketTracer_INF1004_FundamentosTI.pdf";
+            linkPractica.href = "documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
+            linkPractica.download = "Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
 
             linkPractica.href = "documents/Examen-Tercera-Parte-Fundamentos-TI.pka";
             linkPractica.download = "Examen-Tercera-Parte-Fundamentos-TI.pka";
