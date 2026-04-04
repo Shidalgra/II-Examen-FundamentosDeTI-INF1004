@@ -689,21 +689,57 @@ function setupEventListeners() {
         });
     }
 
-    // Botón descargar final
+    // Función auxiliar para crear una pausa real
+    const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
     const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
+
     if (btnDescargarPracticaPKA) {
-        btnDescargarPracticaPKA.addEventListener("click", function () {
-            // Marcar que el PDF se descargó
-            localStorage.setItem("PDF y PKA descargargos", "true");
+        // Usamos 'async' para poder usar 'await'
+        btnDescargarPracticaPKA.addEventListener("click", async function () {
             
-            const linkPractica = document.createElement("a");
-            linkPractica.href = "documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
-            linkPractica.download = "Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
+            // 1. Bloqueo inmediato: Deshabilitamos el botón para evitar doble clic
+            btnDescargarPracticaPKA.disabled = true;
+            btnDescargarPracticaPKA.innerText = "Descargando...";
+            btnDescargarPracticaPKA.style.opacity = "0.5";
+            btnDescargarPracticaPKA.style.cursor = "not-allowed";
 
-            linkPractica.href = "documents/Examen-Tercera-Parte-Fundamentos-TI.pka";
-            linkPractica.download = "Examen-Tercera-Parte-Fundamentos-TI.pka";
+            // 2. Guardar estado en localStorage
+            localStorage.setItem("PDF y PKA descargados", "true");
 
-            linkPractica.click();
+            try {
+                // --- DESCARGA DEL PDF ---
+                const linkPDF = document.createElement("a");
+                linkPDF.href = "documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
+                linkPDF.download = "Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf";
+                document.body.appendChild(linkPDF);
+                linkPDF.click();
+                document.body.removeChild(linkPDF);
+
+                // 3. EL WAIT: Esperamos 1.5 segundos antes de la siguiente descarga
+                // Esto da respiro al navegador y evita que se bloqueen entre sí
+                await esperar(1500);
+
+                // --- DESCARGA DEL PKA ---
+                const linkPKA = document.createElement("a");
+                linkPKA.href = "documents/Examen-Tercera-Parte-Fundamentos-TI.pka";
+                linkPKA.download = "Examen-Tercera-Parte-Fundamentos-TI.pka";
+                document.body.appendChild(linkPKA);
+                linkPKA.click();
+                document.body.removeChild(linkPKA);
+
+                // 4. Espera final de cortesía antes de reactivar el botón
+                await esperar(2000);
+
+            } catch (error) {
+                console.error("Error en las descargas:", error);
+            } finally {
+                // 5. Reactivamos el botón después de que todo el proceso terminó
+                btnDescargarPracticaPKA.disabled = false;
+                btnDescargarPracticaPKA.innerText = "Descargar Resumen PDF"; // O el texto que tenías
+                btnDescargarPracticaPKA.style.opacity = "1";
+                btnDescargarPracticaPKA.style.cursor = "pointer";
+            }
         });
     }
 
