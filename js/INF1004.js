@@ -691,8 +691,8 @@ function setupEventListeners() {
             // 1. Bloqueo y Feedback inicial
             btnDescargarFinal.disabled = true;
             btnDescargarFinal.style.opacity = "0.7";
-            btnDescargarFinal.style.cursor = "wait";
             btnDescargarFinal.innerText = "Generando PDF...";
+            btnDescargarFinal.style.cursor = "not-allowed";
 
             // 2. Lógica original
             localStorage.setItem("pdfDescargado", "true");
