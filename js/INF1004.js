@@ -679,8 +679,7 @@ function setupEventListeners() {
     //         document.getElementById('btnGenerarPDF').click();
     //     });
     // }
-
-    // Asegúrate de tener la función esperar definida arriba
+    
     // Función para generar la pausa y actualizar el texto del botón
     const esperarConContador = async (segundos, baseTexto, boton) => {
         for (let i = segundos; i > 0; i--) {
@@ -688,8 +687,6 @@ function setupEventListeners() {
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
     };
-
-    // const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     // Botón descargar final
     // --- LÓGICA PARA EL BOTÓN DE RESUMEN FINAL ---
@@ -704,33 +701,40 @@ function setupEventListeners() {
             btnDescargarFinal.style.cursor = "not-allowed";
             btnDescargarFinal.innerText = "Iniciando generación...";
 
-            // 2. Ejecución de la descarga (Tu lógica original)
-            localStorage.setItem("pdfDescargado", "true");
-            const btnGenerar = document.getElementById('btnGenerarPDF');
-            if (btnGenerar) {
-                btnGenerar.click();
+            try {
+                // 3. Espera con contador (Usando tu función esperarConContador)
+                // Le damos 5 segundos para que el proceso del PDF termine con calma
+                await esperarConContador(5, "Preparando Resumen Teórico", btnDescargarFinal);
+
+                // 2. Ejecución de la descarga (Tu lógica original)
+                localStorage.setItem("pdfDescargado", "true");
+                const btnGenerar = document.getElementById('btnGenerarPDF');
+                if (btnGenerar) {
+                    btnGenerar.click();
+                }
+                
+                // 4. Estado final de éxito
+                btnDescargarFinal.innerText = "¡Resumen Descargado!";
+                btnDescargarFinal.style.backgroundColor = "#28a745"; // El verde sólido
+                btnDescargarFinal.style.color = "white";
+                
+                // El truco clave: Opacidad al 100% para que el verde no se vea "lavado"
+                btnDescargarFinal.style.opacity = "0.8"; 
+                btnDescargarFinal.style.cursor = "not-allowed";
+                
+                // Aseguramos que quede deshabilitado permanentemente
+                btnDescargarFinal.disabled = true;  
+
+            } catch (error) {
+                console.error("Error en el proceso:", error);
+                btnDescargarFinal.innerText = "Error en descarga";
+                btnDescargarFinal.disabled = false;
+                btnDescargarFinal.style.opacity = "1";
             }
 
-            // 3. Espera con contador (Usando tu función esperarConContador)
-            // Le damos 5 segundos para que el proceso del PDF termine con calma
-            await esperarConContador(5, "Preparando Resumen Teórico", btnDescargarFinal);
-
-            // 4. Estado final de éxito
-            btnDescargarFinal.innerText = "¡Resumen Descargado!";
-            btnDescargarFinal.style.backgroundColor = "#28a745"; // El verde sólido
-            btnDescargarFinal.style.color = "white";
             
-            // El truco clave: Opacidad al 100% para que el verde no se vea "lavado"
-            btnDescargarFinal.style.opacity = "1"; 
-            btnDescargarFinal.style.cursor = "default";
-            
-            // Aseguramos que quede deshabilitado permanentemente
-            btnDescargarFinal.disabled = true; 
         });
-    }
-
-    
-
+    } 
 
     const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
 
@@ -754,9 +758,12 @@ function setupEventListeners() {
             };
 
             try {
+
+                await esperarConContador(5, "Preparando PDF", btnDescargarPracticaPKA);
+
                 // --- PASO 1: Descargar PDF ---
                 btnDescargarPracticaPKA.innerText = "Iniciando PDF...";
-                descargarArchivo("documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf", "Examen_Instrucciones.pdf");
+                descargarArchivo("documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf", "Examen_Instrucciones_PacketTracer.pdf");
 
                 // --- PASO 2: Espera con contador para el PKA ---
                 // Usamos 5 segundos para asegurar que el navegador no bloquee
@@ -764,22 +771,23 @@ function setupEventListeners() {
 
                 // --- PASO 3: Descargar PKA ---
                 btnDescargarPracticaPKA.innerText = "Iniciando PKA...";
-                descargarArchivo("documents/Examen-Tercera-Parte-Fundamentos-TI.pka", "Examen_Laboratorio.pka");
+                descargarArchivo("documents/Examen-Tercera-Parte-Fundamentos-TI.pka", "Examen_Laboratorio_PacketTracer.pka");
 
                 // --- PASO 4: Cuenta atrás final para éxito ---
                 await esperarConContador(3, "Finalizando", btnDescargarPracticaPKA);
+
 
                 // --- PASO 5: Resultado final ---
                 btnDescargarPracticaPKA.innerText = "¡Archivos para práctica final descargados!";
                 btnDescargarPracticaPKA.style.backgroundColor = "#28a745";
                 btnDescargarPracticaPKA.style.color = "white";
 
-                // Opcional: Rehabilitar después de unos segundos si quieres que puedan reintentar
-                setTimeout(() => {
-                    btnDescargarFinal.disabled = true;
-                    btnDescargarFinal.style.opacity = "1";
-                }, 3000);
+                // El truco clave: Opacidad al 100% para que el verde no se vea "lavado"
+                btnDescargarPracticaPKA.style.opacity = "0.8"; 
+                btnDescargarPracticaPKA.style.cursor = "not-allowed";
 
+                btnDescargarPracticaPKA.disabled = true;
+                
             } catch (error) {
                 console.error("Error en el proceso:", error);
                 btnDescargarPracticaPKA.innerText = "Error en descarga";
