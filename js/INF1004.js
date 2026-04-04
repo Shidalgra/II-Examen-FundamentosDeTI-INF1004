@@ -670,13 +670,47 @@ function setupEventListeners() {
         });
     }
 
+    // // Botón descargar final
+    // const btnDescargarFinal = document.getElementById("btnDescargarFinal");
+    // if (btnDescargarFinal) {
+    //     btnDescargarFinal.addEventListener("click", function () {
+    //         // Marcar que el PDF se descargó
+    //         localStorage.setItem("pdfDescargado", "true");
+    //         document.getElementById('btnGenerarPDF').click();
+    //     });
+    // }
+
+    // Asegúrate de tener la función esperar definida arriba
+    const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
     // Botón descargar final
     const btnDescargarFinal = document.getElementById("btnDescargarFinal");
+
     if (btnDescargarFinal) {
-        btnDescargarFinal.addEventListener("click", function () {
-            // Marcar que el PDF se descargó
+        btnDescargarFinal.addEventListener("click", async function () {
+            // 1. Bloqueo y Feedback inicial
+            btnDescargarFinal.disabled = true;
+            btnDescargarFinal.style.opacity = "0.7";
+            btnDescargarFinal.innerText = "Generando PDF...";
+
+            // 2. Lógica original
             localStorage.setItem("pdfDescargado", "true");
             document.getElementById('btnGenerarPDF').click();
+
+            // 3. Simulación de carga para que el usuario vea el cambio
+            // Esto evita que piensen que no le dieron clic
+            await esperar(2000); 
+
+            // 4. Estado final
+            btnDescargarFinal.innerText = "¡Resumen Descargado!";
+            btnDescargarFinal.style.backgroundColor = "#28a745"; // Verde éxito
+            btnDescargarFinal.style.color = "white";
+            
+            // Opcional: Rehabilitar después de unos segundos si quieres que puedan reintentar
+            setTimeout(() => {
+                btnDescargarFinal.disabled = false;
+                btnDescargarFinal.style.opacity = "1";
+            }, 3000);
         });
     }
 
@@ -689,22 +723,26 @@ function setupEventListeners() {
         });
     }
 
-    // Función para generar la pausa
-    const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    // Función para generar la pausa y actualizar el texto del botón
+    const esperarConContador = async (segundos, baseTexto, boton) => {
+        for (let i = segundos; i > 0; i--) {
+            boton.innerText = `${baseTexto} (${i}s)...`;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    };
 
     const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
 
     if (btnDescargarPracticaPKA) {
         btnDescargarPracticaPKA.addEventListener("click", async function () {
             
-            // 1. Bloqueo para evitar doble clic y saturación
+            // 1. Bloqueo visual inicial
             btnDescargarPracticaPKA.disabled = true;
             btnDescargarPracticaPKA.style.opacity = "0.6";
             btnDescargarPracticaPKA.style.cursor = "not-allowed";
             
             localStorage.setItem("PDF y PKA descargados", "true");
 
-            // Función interna para disparar la descarga
             const descargarArchivo = (ruta, nombre) => {
                 const link = document.createElement("a");
                 link.href = ruta;
@@ -716,27 +754,30 @@ function setupEventListeners() {
 
             try {
                 // --- PASO 1: Descargar PDF ---
-                btnDescargarPracticaPKA.innerText = "Descargando PDF (1/2)...";
+                btnDescargarPracticaPKA.innerText = "Iniciando PDF...";
                 descargarArchivo("documents/Examen_Practica_PacketTracer_INF1004_FundamentosTI.pdf", "Examen_Instrucciones.pdf");
 
-                // --- PASO 2: EL WAIT CRÍTICO ---
-                // 3000ms (3 segundos) suele ser el límite donde el navegador 
-                // deja de considerar que es una ráfaga automática sospechosa.
-                await esperar(3000);
+                // --- PASO 2: Espera con contador para el PKA ---
+                // Usamos 5 segundos para asegurar que el navegador no bloquee
+                await esperarConContador(5, "Preparando PKA", btnDescargarPracticaPKA);
 
                 // --- PASO 3: Descargar PKA ---
-                btnDescargarPracticaPKA.innerText = "Descargando PKA (2/2)...";
+                btnDescargarPracticaPKA.innerText = "Iniciando PKA...";
                 descargarArchivo("documents/Examen-Tercera-Parte-Fundamentos-TI.pka", "Examen_Laboratorio.pka");
 
-                // --- PASO 4: Finalización ---
-                await esperar(1000);
-                btnDescargarPracticaPKA.innerText = "Archivos Descargados";
-                btnDescargarPracticaPKA.style.backgroundColor = "#28a745"; // Color verde de éxito
+                // --- PASO 4: Cuenta atrás final para éxito ---
+                await esperarConContador(3, "Finalizando", btnDescargarPracticaPKA);
+
+                // --- PASO 5: Resultado final ---
+                btnDescargarPracticaPKA.innerText = "¡Archivos Descargados!";
+                btnDescargarPracticaPKA.style.backgroundColor = "#28a745";
+                btnDescargarPracticaPKA.style.color = "white";
 
             } catch (error) {
                 console.error("Error en el proceso:", error);
                 btnDescargarPracticaPKA.innerText = "Error en descarga";
                 btnDescargarPracticaPKA.disabled = false;
+                btnDescargarPracticaPKA.style.opacity = "1";
             }
         });
     }
