@@ -2353,6 +2353,14 @@ button:hover {
   line-height: 1.6;
 }
 
+.listaIndicaciones-final {
+  margin: 25px 25px 25px 25px;
+}
+
+.listaIndicaciones-final li {
+  text-align: left;
+}
+
 .lastpage-container {
   display: flex;
   flex-direction: column;

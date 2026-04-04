@@ -681,7 +681,15 @@ function setupEventListeners() {
     // }
 
     // Asegúrate de tener la función esperar definida arriba
-    const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    // Función para generar la pausa y actualizar el texto del botón
+    const esperarConContador = async (segundos, baseTexto, boton) => {
+        for (let i = segundos; i > 0; i--) {
+            boton.innerText = `${baseTexto} (${i}s)...`;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    };
+
+    // const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     // Botón descargar final
     const btnDescargarFinal = document.getElementById("btnDescargarFinal");
@@ -700,7 +708,7 @@ function setupEventListeners() {
 
             // 3. Simulación de carga para que el usuario vea el cambio
             // Esto evita que piensen que no le dieron clic
-            await esperar(3000); 
+             await esperarConContador(5, "Preparando Resumen Teórico", btnDescargarFinal);; 
 
             // 4. Estado final
             btnDescargarFinal.innerText = "¡Resumen Descargado!";
@@ -724,13 +732,6 @@ function setupEventListeners() {
         });
     }
 
-    // Función para generar la pausa y actualizar el texto del botón
-    const esperarConContador = async (segundos, baseTexto, boton) => {
-        for (let i = segundos; i > 0; i--) {
-            boton.innerText = `${baseTexto} (${i}s)...`;
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-    };
 
     const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
 
