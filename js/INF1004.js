@@ -692,45 +692,44 @@ function setupEventListeners() {
     // const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     // Botón descargar final
+    // --- LÓGICA PARA EL BOTÓN DE RESUMEN FINAL ---
     const btnDescargarFinal = document.getElementById("btnDescargarFinal");
 
     if (btnDescargarFinal) {
         btnDescargarFinal.addEventListener("click", async function () {
-            // 1. Bloqueo y Feedback inicial
+            
+            // 1. Bloqueo visual inicial (Igual que el PKA)
             btnDescargarFinal.disabled = true;
-            btnDescargarFinal.style.opacity = "0.7";
-            btnDescargarFinal.innerText = "Generando PDF...";
+            btnDescargarFinal.style.opacity = "0.6";
             btnDescargarFinal.style.cursor = "not-allowed";
+            btnDescargarFinal.innerText = "Iniciando generación...";
 
-            // 2. Lógica original
+            // 2. Ejecución de la descarga (Tu lógica original)
             localStorage.setItem("pdfDescargado", "true");
-            document.getElementById('btnGenerarPDF').click();
+            const btnGenerar = document.getElementById('btnGenerarPDF');
+            if (btnGenerar) {
+                btnGenerar.click();
+            }
 
-            // 3. Simulación de carga para que el usuario vea el cambio
-            // Esto evita que piensen que no le dieron clic
-             await esperarConContador(5, "Preparando Resumen Teórico", btnDescargarFinal);; 
+            // 3. Espera con contador (Usando tu función esperarConContador)
+            // Le damos 5 segundos para que el proceso del PDF termine con calma
+            await esperarConContador(5, "Preparando Resumen Teórico", btnDescargarFinal);
 
-            // 4. Estado final
+            // 4. Estado final de éxito
             btnDescargarFinal.innerText = "¡Resumen Descargado!";
-            btnDescargarFinal.style.backgroundColor = "#28a745"; // Verde éxito
+            btnDescargarFinal.style.backgroundColor = "#28a745"; // El verde sólido
             btnDescargarFinal.style.color = "white";
             
-            // Opcional: Rehabilitar después de unos segundos si quieres que puedan reintentar
-            setTimeout(() => {
-                btnDescargarFinal.disabled = true;
-                btnDescargarFinal.style.opacity = "1";
-            }, 3000);
+            // El truco clave: Opacidad al 100% para que el verde no se vea "lavado"
+            btnDescargarFinal.style.opacity = "1"; 
+            btnDescargarFinal.style.cursor = "default";
+            
+            // Aseguramos que quede deshabilitado permanentemente
+            btnDescargarFinal.disabled = true; 
         });
     }
 
-    // Botón generar PDF del menú
-    const btnGenerarPDF = document.getElementById("btnGenerarPDF");
-    if (btnGenerarPDF) {
-        btnGenerarPDF.addEventListener("click", function () {
-            // Marcar que el PDF se descargó
-            localStorage.setItem("pdfDescargado", "true");
-        });
-    }
+    
 
 
     const btnDescargarPracticaPKA = document.getElementById("btnDescargarPracticaPKA");
@@ -787,6 +786,15 @@ function setupEventListeners() {
                 btnDescargarPracticaPKA.disabled = false;
                 btnDescargarPracticaPKA.style.opacity = "1";
             }
+        });
+    }
+
+    // Botón generar PDF del menú
+    const btnGenerarPDF = document.getElementById("btnGenerarPDF");
+    if (btnGenerarPDF) {
+        btnGenerarPDF.addEventListener("click", function () {
+            // Marcar que el PDF se descargó
+            localStorage.setItem("pdfDescargado", "true");
         });
     }
 
