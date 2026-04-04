@@ -769,7 +769,7 @@ function setupEventListeners() {
                 await esperarConContador(3, "Finalizando", btnDescargarPracticaPKA);
 
                 // --- PASO 5: Resultado final ---
-                btnDescargarPracticaPKA.innerText = "¡Archivos Descargados!";
+                btnDescargarPracticaPKA.innerText = "¡Archivos para práctica final descargados!";
                 btnDescargarPracticaPKA.style.backgroundColor = "#28a745";
                 btnDescargarPracticaPKA.style.color = "white";
 
