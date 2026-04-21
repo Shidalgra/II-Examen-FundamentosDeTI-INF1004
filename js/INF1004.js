@@ -10,13 +10,15 @@ const ADMIN_PASSWORD = "Shoudymella1986*"; //Contraseña para borrar los datos d
 const MAX_CLEAR_USES = 1; // Cambia a 2 o 3 si deseas permitir más usos
 const CLEAR_INTERVAL_DAYS = 1; // Tiempo en días de espera para poder borrar los datos
 
-const MAX_ATTEMPTS = 100;                 // Intentos 
+const MAX_ATTEMPTS = 3;                 // Intentos 
 const UNIQUE_QUESTIONS_COUNT = 20;      // Selección única 20x1 = 20 pts
-const DEVELOPMENT_QUESTIONS_COUNT = 5; // Desarrollo 10x2 = 20 pts
+const UNIQUE_QUESTIONS_VALUE = "1 PTS";
+const DEVELOPMENT_QUESTIONS_COUNT = 5; // Desarrollo 5x2 = 10 pts
+const DEVELOPMENT_QUESTIONS_VALUE = "2 PTS";
 // Crucigrama 23 pts
-const PRACTICE_QUESTIONS_PAREO = 14;    // Pareo 14x0.5 = 7 pts
-const PRACTICE_QUESTIONS_SOUP = 14;     // Soup   14x0.5 = 7 pts
-const ACCESS_CODE = "shida";       // 12345 Código que se valida en script.js
+const PRACTICE_QUESTIONS_PAREO = 10;    // Pareo 12x0.5 = 5 pts
+const PRACTICE_QUESTIONS_SOUP = 10;     // Soup   12x0.5 = 5 pts
+const ACCESS_CODE = "Shoudy";       // 12345 Código que se valida en script.js
 /////////////////////////////////
 
 //////////////////////////////////
@@ -1397,16 +1399,16 @@ dateElement.textContent = `Fecha: ${formattedDate}`;
 //PreguntasDesarrollo.js
 /////////////////////////////////
 const preguntasDesarrolloCompletas = [
-    "Analice cómo la combinación de firewalls, autenticación multifactor (MFA) y políticas de contraseñas contribuye a la defensa en profundidad de una red corporativa. Da ejemplos concretos de ataques que podrían ser mitigados por cada medida. (2 pts)",
-    "Explique el proceso de configuración segura de un router, desde la asignación de IPs hasta la implementación de SSH y ACLs, justificando la importancia de cada paso para la seguridad de la red. (2 pts)",
-    "Evalúe los riesgos y beneficios de utilizar gestores de contraseñas en entornos empresariales. ¿Cuáles son las mejores prácticas para su implementación y qué amenazas podrían surgir si no se gestionan adecuadamente? (2 pts)",
-    "Compare los protocolos HTTP y HTTPS en términos de seguridad, explicando cómo el cifrado impacta la confidencialidad e integridad de la información transmitida. (2 pts)",
-    "Describa un escenario realista de ataque de phishing dirigido a empleados de una empresa. Explica cómo la capacitación y las herramientas tecnológicas pueden reducir la probabilidad de éxito del ataque. (2 pts)",
-    "Analice las diferencias entre una LAN y una WAN en cuanto a amenazas y medidas de seguridad recomendadas. Incluye ejemplos de dispositivos y configuraciones específicas para cada caso. (2 pts)",
-    "Justifique la importancia de mantener actualizados los sistemas y dispositivos de red. ¿Qué vulnerabilidades pueden explotarse en sistemas desactualizados y cómo afectan a la organización? (2 pts)",
-    "Explique el funcionamiento de un sistema de detección de intrusos (IDS) como Snort y cómo puede integrarse con otras herramientas de seguridad para una protección integral de la red. (2 pts)",
-    "Propónga una política integral de uso seguro de dispositivos USB en una empresa, considerando controles técnicos y capacitación de usuarios. Explica cómo esta política previene incidentes de seguridad. (2 pts)",
-    "Analice el impacto de la segmentación de red mediante VLANs en la seguridad y eficiencia operativa de una organización. Incluye ventajas, desventajas y recomendaciones de implementación. (2 pts)",
+    `Analice cómo la combinación de firewalls, autenticación multifactor (MFA) y políticas de contraseñas contribuye a la defensa en profundidad de una red corporativa. Da ejemplos concretos de ataques que podrían ser mitigados por cada medida. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Explique el proceso de configuración segura de un router, desde la asignación de IPs hasta la implementación de SSH y ACLs, justificando la importancia de cada paso para la seguridad de la red. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Evalúe los riesgos y beneficios de utilizar gestores de contraseñas en entornos empresariales. ¿Cuáles son las mejores prácticas para su implementación y qué amenazas podrían surgir si no se gestionan adecuadamente? ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Compare los protocolos HTTP y HTTPS en términos de seguridad, explicando cómo el cifrado impacta la confidencialidad e integridad de la información transmitida. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Describa un escenario realista de ataque de phishing dirigido a empleados de una empresa. Explica cómo la capacitación y las herramientas tecnológicas pueden reducir la probabilidad de éxito del ataque. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Analice las diferencias entre una LAN y una WAN en cuanto a amenazas y medidas de seguridad recomendadas. Incluye ejemplos de dispositivos y configuraciones específicas para cada caso. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Justifique la importancia de mantener actualizados los sistemas y dispositivos de red. ¿Qué vulnerabilidades pueden explotarse en sistemas desactualizados y cómo afectan a la organización? ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Explique el funcionamiento de un sistema de detección de intrusos (IDS) como Snort y cómo puede integrarse con otras herramientas de seguridad para una protección integral de la red. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Propónga una política integral de uso seguro de dispositivos USB en una empresa, considerando controles técnicos y capacitación de usuarios. Explica cómo esta política previene incidentes de seguridad. ${DEVELOPMENT_QUESTIONS_VALUE}`,
+    `Analice el impacto de la segmentación de red mediante VLANs en la seguridad y eficiencia operativa de una organización. Incluye ventajas, desventajas y recomendaciones de implementación. ${DEVELOPMENT_QUESTIONS_VALUE}`,
 ];
 
 // Función para seleccionar preguntas únicas aleatorias 
@@ -1920,7 +1922,7 @@ let studentAnswers = [];
 
 const uniqueQuestions = [
     {
-        question: "¿Cuál es la principal diferencia entre un firewall de hardware y uno de software? (1 pts)",
+        question: `¿Cuál es la principal diferencia entre un firewall de hardware y uno de software? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "El de hardware protege solo dispositivos móviles, el de software solo computadoras.",
             "El de hardware filtra el tráfico antes de llegar al dispositivo, el de software lo hace d,entro del SO.",
@@ -1931,7 +1933,7 @@ const uniqueQuestions = [
         correct: "El de hardware filtra el tráfico antes de llegar al dispositivo, el de software lo hace d,entro del SO."
     },
     {
-        question: "¿Cuál de las siguientes prácticas no son recomendables al usar un dispositivo USB? (1 pts)",
+        question: `¿Cuál de las siguientes prácticas no son recomendables al usar un dispositivo USB? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Escanear el USB con un antivirus actualizado antes de abrir archivos.",
             "Solo usar USBs de marca reconocida.",
@@ -1942,7 +1944,7 @@ const uniqueQuestions = [
         correct: "Conectar dispositivos USB desconocidos o de procedencia incierta."
     },
     {
-        question: "¿Qué característica distingue a la autenticación multifactor (MFA) de una autenticación tradicional? (1 pts)",
+        question: `¿Qué característica distingue a la autenticación multifactor (MFA) de una autenticación tradicional? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Solo requiere una contraseña larga y compleja con letras, números y símbolos.",
             "Combina al menos dos métodos de verificación independientes.",
@@ -1953,7 +1955,7 @@ const uniqueQuestions = [
         correct: "Combina al menos dos métodos de verificación independientes."
     },
     {
-        question: "¿Cuál es la principal función de una ACL (Access Control List) en un Router? (1 pts)",
+        question: `¿Cuál es la principal función de una ACL (Access Control List) en un Router? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Restringir el tráfico según reglas definidas por el administrador.",
             "Actualizar el firmware automáticamente.",
@@ -1964,7 +1966,7 @@ const uniqueQuestions = [
         correct: "Restringir el tráfico según reglas definidas por el administrador."
     },
     {
-        question: "¿Qué protocolo se utiliza para asignar direcciones IP dinámicamente en una red? (1 pts)",
+        question: `¿Qué protocolo se utiliza para asignar direcciones IP dinámicamente en una red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "FTP.",
             "DHCP.",
@@ -1975,7 +1977,7 @@ const uniqueQuestions = [
         correct: "DHCP"
     },
     {
-        question: "¿Cuál de los siguientes ataques busca saturar los recursos de un sistema hasta dejarlo inoperante? (1 pts)",
+        question: `¿Cuál de los siguientes ataques busca saturar los recursos de un sistema hasta dejarlo inoperante? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Phishing.",
             "DoS/DDoS.",
@@ -1986,7 +1988,7 @@ const uniqueQuestions = [
         correct: "DoS/DDos"
     },
     {
-        question: "¿Qué elemento NO es recomendable incluir en una contraseña segura? (1 pts)",
+        question: `¿Qué elemento NO es recomendable incluir en una contraseña segura? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Letras mayúsculas y minúsculas.",
             "Caracteres especiales.",
@@ -1997,7 +1999,7 @@ const uniqueQuestions = [
         correct: "Secuencias numéricas como “12345678”."
     },
     {
-        question: "¿Cuál es la principal ventaja de usar gestores de contraseñas? (1 pts)",
+        question: `¿Cuál es la principal ventaja de usar gestores de contraseñas? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Ayudan a crearlas y permiten guardarlas fácilmente.",
             "Generan y almacenan contraseñas complejas y únicas para cada servicio.",
@@ -2008,7 +2010,7 @@ const uniqueQuestions = [
         correct: "Generan y almacenan contraseñas complejas y únicas para cada servicio."
     },
     {
-        question: "¿Qué función cumple el cifrado en la seguridad de red? (1 pts)",
+        question: `¿Qué función cumple el cifrado en la seguridad de red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Permitir el acceso remoto sin autenticación.",
             "Proteger la confidencialidad de los datos transmitidos.",
@@ -2019,7 +2021,7 @@ const uniqueQuestions = [
         correct: "Proteger la confidencialidad de los datos transmitidos."
     },
     {
-        question: "¿Cuál de las siguientes opciones representa un ejemplo de amenaza de integridad en la red? (1 pts)",
+        question: `¿Cuál de las siguientes opciones representa un ejemplo de amenaza de integridad en la red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Robo de credenciales por phishing.",
             "Modificación no autorizada de archivos durante la transmisión.",
@@ -2030,7 +2032,7 @@ const uniqueQuestions = [
         correct: "Modificación no autorizada de archivos durante la transmisión."
     },
     {
-        question: "¿Qué herramienta permite analizar el tráfico de red para detectar amenazas en tiempo real? (1 pts)",
+        question: `¿Qué herramienta permite analizar el tráfico de red para detectar amenazas en tiempo real? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Lucidchart.",
             "Packet Tracer.",
@@ -2041,7 +2043,7 @@ const uniqueQuestions = [
         correct: "Wireshark"
     },
     {
-        question: "¿Cuál es la mejor práctica al recibir un correo sospechoso que solicita tus credenciales? (1 pts)",
+        question: `¿Cuál es la mejor práctica al recibir un correo sospechoso que solicita tus credenciales? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Responder inmediatamente para aclarar dudas.",
             "Hacer clic en los enlaces para verificar su autenticidad.",
@@ -2052,7 +2054,7 @@ const uniqueQuestions = [
         correct: "Ignorar el correo y reportarlo como Phishing"
     },
     {
-        question: "¿Qué capa del modelo TCP/IP se encarga de la entrega de paquetes entre dispositivos en diferentes redes? (1 pts)",
+        question: `¿Qué capa del modelo TCP/IP se encarga de la entrega de paquetes entre dispositivos en diferentes redes? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Aplicación.",
             "Red (Internet).",
@@ -2063,7 +2065,7 @@ const uniqueQuestions = [
         correct: "Red (Internet)."
     },
     {
-        question: "¿Cuál de los siguientes NO es un método de autenticación de doble factor? (1 pts)",
+        question: `¿Cuál de los siguientes NO es un método de autenticación de doble factor? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Contraseña + SMS.",
             "Contraseña + token físico.",
@@ -2074,7 +2076,7 @@ const uniqueQuestions = [
         correct: "Contraseña + pregunta de seguridad."
     },
     {
-        question: "¿Qué tipo de red conecta dispositivos dentro de un área geográfica limitada, como un edificio? (1 pts)",
+        question: `¿Qué tipo de red conecta dispositivos dentro de un área geográfica limitada, como un edificio? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "WAN.",
             "LAN.",
@@ -2085,7 +2087,7 @@ const uniqueQuestions = [
         correct: "LAN."
     },
     {
-        question: "¿Cuál es la principal función de un switch en una red LAN? (1 pts)",
+        question: `¿Cuál es la principal función de un switch en una red LAN? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Asignar direcciones IP públicas.",
             "Conectar dispositivos y gestionar el tráfico dentro de la red local.",
@@ -2096,7 +2098,7 @@ const uniqueQuestions = [
         correct: "Conectar dispositivos y gestionar el tráfico dentro de la red local."
     },
     {
-        question: "¿Qué acción es fundamental para mantener la disponibilidad de los servicios en una red? (1 pts)",
+        question: `¿Qué acción es fundamental para mantener la disponibilidad de los servicios en una red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Usar contraseñas simples.",
             "Compartir credenciales entre usuarios.",
@@ -2107,7 +2109,7 @@ const uniqueQuestions = [
         correct: "Implementar redundancia y copias de seguridad."
     },
     {
-        question: "¿Cuál es el riesgo principal de no actualizar el software de red regularmente? (1 pts)",
+        question: `¿Cuál es el riesgo principal de no actualizar el software de red regularmente? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Exposición a vulnerabilidades conocidas.",
             "Disminución de la velocidad de la red.",
@@ -2118,7 +2120,7 @@ const uniqueQuestions = [
         correct: "Exposición a vulnerabilidades conocidas."
     },
     {
-        question: "¿Qué protocolo se utiliza para transferir archivos de manera segura en una red? (1 pts)",
+        question: `¿Qué protocolo se utiliza para transferir archivos de manera segura en una red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "HTTP.",
             "FTP.",
@@ -2129,7 +2131,7 @@ const uniqueQuestions = [
         correct: "SFTP"
     },
     {
-        question: "¿Cuál es el principal objetivo del principio de confidencialidad en seguridad de red? (1 pts)",
+        question: `¿Cuál es el principal objetivo del principio de confidencialidad en seguridad de red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Garantizar que los datos estén siempre disponibles.",
             "Prevenir la modificación no autorizada de información.",
@@ -2140,7 +2142,7 @@ const uniqueQuestions = [
         correct: "Impedir el acceso no autorizado a la información."
     },
     {
-        question: "¿Qué medida es más efectiva para protegerse del phishing? (1 pts)",
+        question: `¿Qué medida es más efectiva para protegerse del phishing? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Usar siempre la misma contraseña.",
             "Verificar la URL y remitente antes de ingresar datos.",
@@ -2151,7 +2153,7 @@ const uniqueQuestions = [
         correct: "Verificar la URL y remitente antes de ingresar datos."
     },
     {
-        question: "¿Cuál es la función principal de un router en una red doméstica? (1 pts)",
+        question: `¿Cuál es la función principal de un router en una red doméstica? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Conectar dispositivos a Internet y enviar información desde internet a los dispositivos personales.",
             "Proveer direcciones MAC y gestionar la configuración que envía el proveedor de servicio.",
@@ -2162,7 +2164,7 @@ const uniqueQuestions = [
         correct: "Conectar dispositivos a Internet y enviar información desde internet a los dispositivos personales."
     },
     {
-        question: "¿Qué diferencia clave existe entre LAN y WAN? (1 pts)",
+        question: `¿Qué diferencia clave existe entre LAN y WAN? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "La LAN es inalámbrica y la WAN es cableada.",
             "La LAN cubre áreas pequeñas, la WAN cubre grandes distancias.",
@@ -2173,7 +2175,7 @@ const uniqueQuestions = [
         correct: "La LAN cubre áreas pequeñas, la WAN cubre grandes distancias."
     },
     {
-        question: "¿Qué acción debe realizarse al configurar SSH en un router para máxima seguridad? (1 pts)",
+        question: `¿Qué acción debe realizarse al configurar SSH en un router para máxima seguridad? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Usar contraseñas encriptadas y haciendo pool en DHCP.",
             "Habilitar Telnet y no generar claves RSA",
@@ -2184,7 +2186,7 @@ const uniqueQuestions = [
         correct: "Generar claves RSA y deshabilitar Telnet."
     },
     {
-        question: "¿Cuál es el propósito de segmentar una red mediante VLANs? (1 pts)",
+        question: `¿Cuál es el propósito de segmentar una red mediante VLANs? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Mejorar la velocidad de Internet.",
             "Separar el tráfico y aumentar la seguridad interna.",
@@ -2195,7 +2197,7 @@ const uniqueQuestions = [
         correct: "Separar el tráfico y aumentar la seguridad interna."
     },
     {
-        question: "¿Qué herramienta es ideal para realizar pruebas de penetración y evaluar la seguridad de una red? (1 pts)",
+        question: `¿Qué herramienta es ideal para realizar pruebas de penetración y evaluar la seguridad de una red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Bridges TCP/IP.",
             "Webflow.",
@@ -2206,7 +2208,7 @@ const uniqueQuestions = [
         correct: "Kali Linux."
     },
     {
-        question: "¿Cuál es la consecuencia de no cifrar las contraseñas en la configuración de un router? (1 pts)",
+        question: `¿Cuál es la consecuencia de no cifrar las contraseñas en la configuración de un router? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Empeora la velocidad de acceso.",
             "Da problemas con acceso no autorizado y a la configuración.",
@@ -2217,7 +2219,7 @@ const uniqueQuestions = [
         correct: "Da problemas con acceso no autorizado y a la configuración."
     },
     {
-        question: "¿Qué tipo de amenaza representa un software espía (spyware)? (1 pts)",
+        question: `¿Qué tipo de amenaza representa un software espía (spyware)? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Robo de información y monitoreo de actividades.",
             "Interrupción de servicio.",
@@ -2228,7 +2230,7 @@ const uniqueQuestions = [
         correct: "Robo de información y monitoreo de actividades."
     },
     {
-        question: "¿Cuál es el primer paso para mitigar un ataque de acceso no autorizado en un Router? (1 pts)",
+        question: `¿Cuál es el primer paso para mitigar un ataque de acceso no autorizado en un Router? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Guardar la contraseña en un block de notas.",
             "Deshabilitar Telnet y habilitar SSH.",
@@ -2239,7 +2241,7 @@ const uniqueQuestions = [
         correct: "Deshabilitar Telnet y habilitar SSH."
     },
     {
-        question: "¿Qué configuración en el navegador ayuda a proteger la privacidad del usuario? (1 pts)",
+        question: `¿Qué configuración en el navegador ayuda a proteger la privacidad del usuario? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Solo acceder desde Google.",
             "Desactivar la navegación segura",
@@ -2250,7 +2252,7 @@ const uniqueQuestions = [
         correct: "Bloquear cookies de terceros y activar navegación segura"
     },
     {
-        question: "¿Qué técnica ayuda a detectar intentos de intrusión en una red? (1 pts)",
+        question: `¿Qué técnica ayuda a detectar intentos de intrusión en una red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Uso de hojas de cálculo",
             "Monitoreo con sistemas IDS como Snort",
@@ -2261,7 +2263,7 @@ const uniqueQuestions = [
         correct: "Monitoreo con sistemas IDS como Snort"
     },
     {
-        question: "¿Cuál es el riesgo de usar la misma contraseña en varias cuentas? (1 pts)",
+        question: `¿Cuál es el riesgo de usar la misma contraseña en varias cuentas? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "No hay riesgo si la contraseña es compleja.",
             "Si una cuenta es comprometida, todas las demás quedan vulnerables.",
@@ -2272,7 +2274,7 @@ const uniqueQuestions = [
         correct: "Si una cuenta es comprometida, todas las demás quedan vulnerables."
     },
     {
-        question: "¿Qué acción se recomienda antes de abrir archivos de un USB recibido de una fuente desconocida? (1 pts)",
+        question: `¿Qué acción se recomienda antes de abrir archivos de un USB recibido de una fuente desconocida? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Escanear el USB con un antivirus actualizado.",
             "Abrir todos los archivos inmediatamente.",
@@ -2283,7 +2285,7 @@ const uniqueQuestions = [
         correct: "Escanear el USB con un antivirus actualizado."
     },
     {
-        question: "¿Cuál es el propósito de un laboratorio de simulación con Packet Tracer en seguridad de red? (1 pts)",
+        question: `¿Cuál es el propósito de un laboratorio de simulación con Packet Tracer en seguridad de red? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Practicar configuración y pruebas de seguridad en un entorno controlado.",
             "Crear la red que me da el servicio contratado.",
@@ -2294,7 +2296,7 @@ const uniqueQuestions = [
         correct: "Practicar configuración y pruebas de seguridad en un entorno controlado."
     },
     {
-        question: "¿Qué medida de seguridad es esencial al administrar redes en una organización? (1 pts)",
+        question: `¿Qué medida de seguridad es esencial al administrar redes en una organización? ${UNIQUE_QUESTIONS_VALUE}`,
         options: [
             "Permitir acceso remoto sin restricciones",
             "Implementar políticas de contraseñas seguras y autenticación multifactor",
