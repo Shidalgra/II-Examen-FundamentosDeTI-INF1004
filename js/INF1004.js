@@ -16,8 +16,8 @@ const UNIQUE_QUESTIONS_VALUE = "1 PTS";
 const DEVELOPMENT_QUESTIONS_COUNT = 5; // Desarrollo 5x2 = 10 pts
 const DEVELOPMENT_QUESTIONS_VALUE = "2 PTS";
 // Crucigrama 23 pts
-const PRACTICE_QUESTIONS_PAREO = 10;    // Pareo 12x0.5 = 5 pts
-const PRACTICE_QUESTIONS_SOUP = 10;     // Soup   12x0.5 = 5 pts
+const PRACTICE_QUESTIONS_PAREO = 10;    // Pareo 10x0.5 = 5 pts
+const PRACTICE_QUESTIONS_SOUP = 10;     // Soup   10x0.5 = 5 pts
 const ACCESS_CODE = "Shoudy";       // 12345 Código que se valida en script.js
 /////////////////////////////////
 
@@ -1930,7 +1930,7 @@ const uniqueQuestions = [
             "El de hardware solo bloquea virus, el de software bloquea todo tipo de amenazas."
 
         ],
-        correct: "El de hardware filtra el tráfico antes de llegar al dispositivo, el de software lo hace d,entro del SO."
+        correct: "El de hardware filtra el tráfico antes de llegar al dispositivo, el de software lo hace dentro del SO."
     },
     {
         question: `¿Cuál de las siguientes prácticas no son recomendables al usar un dispositivo USB? ${UNIQUE_QUESTIONS_VALUE}`,
@@ -2911,6 +2911,7 @@ function renderHTMLToPDF(doc, htmlContent, startY, maxWidth = 170) {
 }
 
 document.getElementById("btnGenerarPDF").addEventListener("click", function () {
+    const resumenNombre = document.getElementById("studentName").value.trim();
     // Inicializar jsPDF
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -3089,7 +3090,7 @@ document.getElementById("btnGenerarPDF").addEventListener("click", function () {
     }
 
     // Guardar el PDF
-    doc.save("resumen_examen.pdf");
+    doc.save(`resumen_examen_${resumenNombre}.pdf`);
 });
 ///////////////////////////////////////////////////
 
@@ -3108,8 +3109,6 @@ let currentCrucigramaWord = null; // Para mantener la dirección de escritura
 const pareoDataComplete = {
     items: [
         { palabra: "Gabinete", definicion: "pieza encargada de proteger las partes que componen a la CPU" },
-
-
         { palabra: "CPU", definicion: "Unidad central de procesamiento, es el componente principal de cualquier dispositivo informático" },
         { palabra: "SO", definicion: "Software fundamental que actúa como intermediario entre el hardware de una PC y los programas que se ejecutan en ella" },
         { palabra: "MOTHERBOARD", definicion: "Circuito integrado principal del sistema informático" },
