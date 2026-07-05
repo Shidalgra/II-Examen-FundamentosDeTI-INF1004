@@ -7,6 +7,7 @@ let pareoMatches = {};
 let crucigramaAnswers = {};
 let sopaFoundWords = [];
 let currentCrucigramaWord = null; // Para mantener la dirección de escritura
+let currentCrucigramaDirection = null; // Dirección activa seleccionada
 
 // Datos para el pareo - Términos del examen
 const pareoDataComplete = {
@@ -477,7 +478,14 @@ function initCrucigrama() {
 
                 gridHTML += `<div class="crucigrama-cell white">
                     ${numberLabel}
-                    <input type="text" maxlength="1" id="${cellId}" onchange="saveCrucigramaAnswer('${cellId}', this.value)" oninput="handleCrucigramaInput(this, ${row}, ${col})" onkeydown="handleCrucigramaKeydown(event, ${row}, ${col})" onfocus="setCrucigramaWord(${row}, ${col})">
+                    <input type="text" 
+                    maxlength="1" 
+                    id="${cellId}" 
+                    onchange="saveCrucigramaAnswer('${cellId}', this.value)" 
+                    oninput="handleCrucigramaInput(this, ${row}, ${col})" 
+                    onclick="setCrucigramaWord(${row}, ${col})" 
+                    onkeydown="handleCrucigramaKeydown(event, ${row}, ${col})"
+                    onfocus="setCrucigramaWord(${row}, ${col})">
                 </div>`;
             } else {
                 gridHTML += `<div class="crucigrama-cell black"></div>`;
@@ -491,12 +499,12 @@ function initCrucigrama() {
             <div class="clues-column">
                 <h4>Horizontales</h4>
                 ${crucigramaData.words.filter(w => w.direction === 'horizontal')
-            .map((w, i) => `<p><strong>${i + 1}.</strong> ${w.clue}</p>`).join('')}
+            .map((w, i) => `<p id="clue-H${i + 1}" class="crucigrama-clue"><strong>${i + 1}.</strong> ${w.clue}</p>`).join('')}
             </div>
             <div class="clues-column">
                 <h4>Verticales</h4>
                 ${crucigramaData.words.filter(w => w.direction === 'vertical')
-            .map((w, i) => `<p><strong>${i + 1}.</strong> ${w.clue}</p>`).join('')}
+            .map((w, i) => `<p id="clue-V${i + 1}" class="crucigrama-clue"><strong>${i + 1}.</strong> ${w.clue}</p>`).join('')}
             </div>
         </div>
     `;
@@ -583,6 +591,16 @@ function capturarPalabrasCompletas() {
     if (!examData.respuestasPractica) examData.respuestasPractica = {};
     examData.respuestasPractica.crucigramaPalabras = palabrasCompletas;
     localStorage.setItem("examData", JSON.stringify(examData));
+
+        updateCrucigramaClueCompletion(palabrasCompletas);
+}
+
+function updateCrucigramaClueCompletion(palabrasCompletas) {
+    Object.entries(palabrasCompletas).forEach(([clave, datos]) => {
+        const clueEl = document.getElementById(`clue-${clave}`);
+        if (!clueEl) return;
+        clueEl.classList.toggle('clue-complete', datos.completa);
+    });
 }
 
 // Función para manejar entrada de texto (solo una letra)
@@ -600,6 +618,9 @@ function handleCrucigramaInput(input, row, col) {
     // Convertir a mayúscula
     value = value.toUpperCase();
 
+    // Seleccionar la palabra/dirección activa antes de avanzar
+    setCrucigramaWord(row, col);
+
     // Actualizar el input
     input.value = value;
 
@@ -616,44 +637,53 @@ function handleCrucigramaInput(input, row, col) {
 
 // Función para establecer la palabra actual cuando se hace foco
 function setCrucigramaWord(row, col) {
-    // Si no hay palabra actual, establecer la primera que encuentre
-    if (!currentCrucigramaWord) {
-        currentCrucigramaWord = findWordAtPosition(row, col);
+    const wordsAtPosition = crucigramaData.words.filter(word => isPositionInWord(row, col, word));
+    if (wordsAtPosition.length === 0) return;
+
+    if (currentCrucigramaWord && isPositionInWord(row, col, currentCrucigramaWord)) {
+        const alternate = wordsAtPosition.find(word => word.direction !== currentCrucigramaWord.direction);
+        if (alternate) {
+            currentCrucigramaWord = alternate;
+            currentCrucigramaDirection = alternate.direction;
+            return;
+        }
     }
-    // Si la posición actual no pertenece a la palabra actual, cambiar
-    else if (!isPositionInWord(row, col, currentCrucigramaWord)) {
-        currentCrucigramaWord = findWordAtPosition(row, col);
-    }
+
+    const preferred = currentCrucigramaDirection
+        ? wordsAtPosition.find(word => word.direction === currentCrucigramaDirection)
+        : null;
+
+    currentCrucigramaWord = preferred || wordsAtPosition[0];
+    currentCrucigramaDirection = currentCrucigramaWord.direction;
 }
 
 // Función para manejar navegación con teclado en el crucigrama
 function handleCrucigramaKeydown(event, row, col) {
     const key = event.key;
 
-    // Bloquear espacios y caracteres especiales
     if (key === ' ' || key.match(/[^a-zA-Z\b\t\r\n]/)) {
         event.preventDefault();
         return;
     }
 
-    // Si es una letra, el manejo se hace en handleCrucigramaInput
     if (/^[a-zA-Z]$/.test(key)) {
         event.preventDefault();
+        setCrucigramaWord(row, col);
+        if (!currentCrucigramaWord) return;
+
         const cellId = `cell-${row}-${col}`;
         const value = key.toUpperCase();
-
         event.target.value = value;
         saveCrucigramaAnswer(cellId, value);
-        moveToNextCell(row, col);
+        moveToNextCell(row, col, value);
         return;
     }
 
-    // Navegación con flechas
     let newRow = row;
     let newCol = col;
 
     if (!currentCrucigramaWord || !isPositionInWord(row, col, currentCrucigramaWord)) {
-        currentCrucigramaWord = findWordAtPosition(row, col);
+        setCrucigramaWord(row, col);
     }
 
     switch (key) {
@@ -675,40 +705,41 @@ function handleCrucigramaKeydown(event, row, col) {
             const currentValue = event.target.value;
 
             if (currentValue) {
-                // Si la celda tiene letra, solo borrar esa letra
                 event.target.value = '';
                 saveCrucigramaAnswer(cellId, '');
                 return;
             }
 
-            // Si está vacía, mover a la celda anterior
-            if (currentCrucigramaWord && isPositionInWord(row, col, currentCrucigramaWord)) {
-                let prevRow = row;
-                let prevCol = col;
+            if (!currentCrucigramaWord) {
+                setCrucigramaWord(row, col);
+            }
+            if (!currentCrucigramaWord) return;
 
-                if (currentCrucigramaWord.direction === 'horizontal') {
-                    prevCol = col - 1;
-                } else {
-                    prevRow = row - 1;
-                }
+            let prevRow = row;
+            let prevCol = col;
+            if (currentCrucigramaWord.direction === 'horizontal') {
+                prevCol = col - 1;
+            } else {
+                prevRow = row - 1;
+            }
 
-                const prevCell = document.getElementById(`cell-${prevRow}-${prevCol}`);
-                if (prevCell && prevCell.tagName === 'INPUT') {
-                    prevCell.focus();
-                    prevCell.value = '';
-                    saveCrucigramaAnswer(`cell-${prevRow}-${prevCol}`, '');
-                }
+            const prevCell = document.getElementById(`cell-${prevRow}-${prevCol}`);
+            if (prevCell && prevCell.tagName === 'INPUT') {
+                prevCell.focus();
+                prevCell.select();
+                prevCell.value = '';
+                saveCrucigramaAnswer(`cell-${prevRow}-${prevCol}`, '');
             }
             return;
         default:
             return;
     }
 
-    // Buscar la siguiente celda válida
     const nextCell = document.getElementById(`cell-${newRow}-${newCol}`);
     if (nextCell && nextCell.tagName === 'INPUT') {
         event.preventDefault();
         nextCell.focus();
+        nextCell.select();
     }
 }
 
@@ -725,14 +756,13 @@ function moveToNextCell(row, col, value) {
         nextRow = row + 1;
     }
 
-    // Verificar si la siguiente celda está dentro de la palabra actual
     if (isPositionInWord(nextRow, nextCol, currentCrucigramaWord)) {
         const nextCell = document.getElementById(`cell-${nextRow}-${nextCol}`);
         if (nextCell && nextCell.tagName === 'INPUT') {
             nextCell.focus();
+            nextCell.select();
         }
     } else {
-        // Si llegamos al final de la palabra, limpiar la palabra actual
         currentCrucigramaWord = null;
     }
 }
@@ -756,6 +786,7 @@ function moveToPreviousCell(row, col) {
     const prevCell = document.getElementById(`cell-${prevRow}-${prevCol}`);
     if (prevCell && prevCell.tagName === 'INPUT') {
         prevCell.focus();
+        prevCell.select();
     }
 }
 

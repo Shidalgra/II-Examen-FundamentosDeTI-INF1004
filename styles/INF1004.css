@@ -1628,6 +1628,17 @@ label[for="agreeCheck"] {
   letter-spacing: 3px;
 }
 
+.crucigrama-clue.clue-complete {
+  text-decoration: line-through;
+  opacity: 0.75;
+}
+
+.crucigrama-clue.clue-complete strong {
+  text-decoration: line-through;
+}
+
+/* ----------------------------------------- */
+
 /* Sopa de letras */
 .sopa-container {
   display: grid;
