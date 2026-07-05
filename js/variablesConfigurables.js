@@ -15,19 +15,19 @@ const MAX_CLEAR_USES = 1;
 const CLEAR_INTERVAL_DAYS = 1;
 // Configuración del examen
 //intentos
-const MAX_ATTEMPTS = 50;
+const MAX_ATTEMPTS = 3;
 // cantidad de preguntas de marque con x y cuanto valen
-const UNIQUE_QUESTIONS_COUNT = 3; //20
+const UNIQUE_QUESTIONS_COUNT = 20; //20
 const UNIQUE_QUESTIONS_VALUE = "1 PTS";
 // cantidad de preguntas de desarrollo y cuanto valen
-const DEVELOPMENT_QUESTIONS_COUNT = 4;
+const DEVELOPMENT_QUESTIONS_COUNT = 5;
 const DEVELOPMENT_QUESTIONS_VALUE = "2 PTS";
 // Prácticas
-const PRACTICE_QUESTIONS_PAREO = 2;
+const PRACTICE_QUESTIONS_PAREO = 10;
 // crucigrama
-const PRACTICE_QUESTIONS_SOUP = 2;
+const PRACTICE_QUESTIONS_SOUP = 10;
 // Código de acceso
-const ACCESS_CODE = "2";
+const ACCESS_CODE = "Shoudy";
 
 
 // para cada vez que llame un SweetAlert con scrollTop, se asegura de que el scroll esté arriba

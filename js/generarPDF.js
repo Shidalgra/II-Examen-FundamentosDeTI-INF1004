@@ -172,6 +172,20 @@ $("#btnGenerarPDF").on("click", function () {
         : [];
     const respuestasDesarrollo = examData.respuestasDesarrollo || {};
     const respuestasPractica = examData.respuestasPractica || {};
+
+    const normalize = (text) => String(text || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, " ");
+
+    const getPareoCorrectDefinition = (palabra) => {
+        if (!window.pareoDataComplete?.items) return "";
+        const item = window.pareoDataComplete.items.find(
+            (i) => normalize(i.palabra) === normalize(palabra)
+        );
+        return item ? item.definicion : "";
+    };
+
     const dtStatus = examData.dtStatus || false;
     const tabSwitched = examData.tabSwitched || false;
     const intentosRestantes = examData.intentosRestantes || 0;
@@ -274,43 +288,156 @@ $("#btnGenerarPDF").on("click", function () {
             y += 10;
         });
     }
-    
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------
     // Práctica
     if (Object.keys(respuestasPractica).length > 0) {
         doc.text("Respuestas de práctica:", 20, y);
-        y += 5;
-        const datosPractica = [];
+        y += 8;
+
         // Pareo
         if (respuestasPractica.pareoMatches && respuestasPractica.pareoData) {
-            Object.entries(respuestasPractica.pareoMatches).forEach(([palabraIndex, defIndex]) => {
-                const palabra = respuestasPractica.pareoData.palabras[palabraIndex] || "Palabra no encontrada";
-                const definicion = respuestasPractica.pareoData.definiciones[defIndex] || "Definición no encontrada";
-                datosPractica.push(["Pareo", `${palabra} - ${definicion}`, "Completado"]);
+            doc.setFont(undefined, "bold");
+            doc.text("Pareo", 20, y);
+            doc.setFont(undefined, "normal");
+            y += 6;
+
+            const palabras = respuestasPractica.pareoData.palabras || [];
+            const definiciones = respuestasPractica.pareoData.definiciones || [];
+            const datosPareo = Object.entries(respuestasPractica.pareoMatches).map(([palIdx, defIdx]) => {
+                const palabra = palabras[palIdx] || "Palabra no encontrada";
+                const definicionSeleccionada = definiciones[defIdx] || "Definición no encontrada";
+                const definicionCorrecta = getPareoCorrectDefinition(palabra);
+                const isCorrect = normalize(definicionSeleccionada) === normalize(definicionCorrecta);
+                return [
+                    isCorrect ? "/" : "X",
+                    palabra,
+                    definicionSeleccionada
+                ];
             });
+
+            if (datosPareo.length > 0) {
+                doc.autoTable({
+                    startY: y,
+                    head: [["Estado", "Palabra escogida", "Definición escogida"]],
+                    body: datosPareo,
+                    didParseCell: function (data) {
+                        if (data.section === "body" && data.column.index === 0) {
+                            const text = String(data.cell.text).toUpperCase();
+                            if (text.includes("/")) {
+                                data.cell.styles.textColor = [0, 128, 0];
+                            } else if (text.includes("X")) {
+                                data.cell.styles.textColor = [220, 0, 0];
+                            }
+                        }
+                    }
+                });
+                y = doc.lastAutoTable.finalY + 10;
+            }
         }
+
         // Crucigrama
-        if (respuestasPractica.crucigramaPalabras) {
-            Object.entries(respuestasPractica.crucigramaPalabras).forEach(([clave, datos]) => {
-                const estado = datos.completa ? "Completado" : "Incompleto";
-                datosPractica.push([`Crucigrama ${clave}`, datos.palabra || "(vacía)", estado]);
-            });
-        } else if (respuestasPractica.crucigramaAnswers) {
-            const respuestasCrucigrama = Object.keys(respuestasPractica.crucigramaAnswers).length;
-            datosPractica.push(["Crucigrama", `${respuestasCrucigrama} casillas completadas`, "Parcial"]);
+        if (respuestasPractica.crucigramaPalabras || respuestasPractica.crucigramaAnswers) {
+            doc.setFont(undefined, "bold");
+            doc.text("Crucigrama", 20, y);
+            doc.setFont(undefined, "normal");
+            y += 6;
+
+            const datosCrucigrama = [];
+
+            if (respuestasPractica.crucigramaPalabras) {
+                Object.entries(respuestasPractica.crucigramaPalabras).forEach(([clave, datos]) => {
+                    const palabra = datos.palabra || "";
+                    const correcta = datos.correcta || "";
+                    const isCorrect = datos.completa && normalize(palabra) === normalize(correcta);
+                    datosCrucigrama.push([
+                        isCorrect ? "/" : "X",
+                        palabra || "(vacía)",
+                        correcta || "(esperada)"
+                    ]);
+                });
+            } else if (respuestasPractica.crucigramaAnswers) {
+                const respuestasCrucigrama = Object.keys(respuestasPractica.crucigramaAnswers).length;
+                datosCrucigrama.push(["", `${respuestasCrucigrama} casillas completadas`, ""]);
+            }
+
+            if (datosCrucigrama.length > 0) {
+                doc.autoTable({
+                    startY: y,
+                    head: [["Estado", "Palabra ingresada", "Palabra esperada"]],
+                    body: datosCrucigrama,
+                    didParseCell: function (data) {
+                        if (data.section === "body" && data.column.index === 0) {
+                            const text = String(data.cell.text).toUpperCase();
+                            if (text.includes("/")) {
+                                data.cell.styles.textColor = [0, 128, 0];
+                            } else if (text.includes("X")) {
+                                data.cell.styles.textColor = [220, 0, 0];
+                            }
+                        }
+                    }
+                });
+                y = doc.lastAutoTable.finalY + 10;
+            }
         }
+
         // Sopa de letras
         if (respuestasPractica.sopaFoundWords) {
-            const palabrasEncontradas = respuestasPractica.sopaFoundWords.join(", ");
-            datosPractica.push(["Sopa de letras", palabrasEncontradas || "Ninguna palabra encontrada", "Completado"]);
-        }
-        if (datosPractica.length > 0) {
+            doc.setFont(undefined, "bold");
+            doc.text("Sopa de letras", 20, y);
+            doc.setFont(undefined, "normal");
+            y += 6;
+
+            const found = respuestasPractica.sopaFoundWords || [];
+            const countFound = found.length;
+            const datosSopa = [
+                [`Encontró: ${countFound}`, ""],
+                ...found.map((palabra) => ["", palabra])
+            ];
+
             doc.autoTable({
                 startY: y,
-                head: [["Actividad", "Respuesta", "Estado"]],
-                body: datosPractica,
+                head: [["Cantidad", "Palabra"]],
+                body: datosSopa
             });
+            y = doc.lastAutoTable.finalY + 10;
         }
     }
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    //     // Pareo
+    //     if (respuestasPractica.pareoMatches && respuestasPractica.pareoData) {
+    //         Object.entries(respuestasPractica.pareoMatches).forEach(([palabraIndex, defIndex]) => {
+    //             const palabra = respuestasPractica.pareoData.palabras[palabraIndex] || "Palabra no encontrada";
+    //             const definicion = respuestasPractica.pareoData.definiciones[defIndex] || "Definición no encontrada";
+    //             datosPractica.push(["Pareo", `${palabra} - ${definicion}`, "Completado"]);
+    //         });
+    //     }
+    //     // Crucigrama
+    //     if (respuestasPractica.crucigramaPalabras) {
+    //         Object.entries(respuestasPractica.crucigramaPalabras).forEach(([clave, datos]) => {
+    //             const estado = datos.completa ? "Completado" : "Incompleto";
+    //             datosPractica.push([`Crucigrama ${clave}`, datos.palabra || "(vacía)", estado]);
+    //         });
+    //     } else if (respuestasPractica.crucigramaAnswers) {
+    //         const respuestasCrucigrama = Object.keys(respuestasPractica.crucigramaAnswers).length;
+    //         datosPractica.push(["Crucigrama", `${respuestasCrucigrama} casillas completadas`, "Parcial"]);
+    //     }
+    //     // Sopa de letras
+    //     if (respuestasPractica.sopaFoundWords) {
+    //         const palabrasEncontradas = respuestasPractica.sopaFoundWords.join(", ");
+    //         datosPractica.push(["Sopa de letras", palabrasEncontradas || "Ninguna palabra encontrada", "Completado"]);
+    //     }
+    //     if (datosPractica.length > 0) {
+    //         doc.autoTable({
+    //             startY: y,
+    //             head: [["Actividad", "Respuesta", "Estado"]],
+    //             body: datosPractica,
+    //         });
+    //     }
+    // }
     // Guardar el PDF
     doc.save(`${resumenNombre}_resumen_examen.pdf`);
 });

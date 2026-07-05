@@ -34,6 +34,8 @@ const pareoDataComplete = {
     ]
 };
 
+window.pareoDataComplete = pareoDataComplete;
+
 // Función para seleccionar elementos aleatorios del pareo
 function getRandomPareoData() {
     const shuffled = [...pareoDataComplete.items].sort(() => Math.random() - 0.5);
