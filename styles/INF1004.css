@@ -1437,8 +1437,8 @@ label[for="agreeCheck"] {
 
 .crucigrama-grid {
   display: grid;
-  grid-template-columns: repeat(15, 30px);
-  grid-template-rows: repeat(15, 30px);
+  grid-template-columns: repeat(16, 30px);
+  grid-template-rows: repeat(16, 30px);
   gap: 1px;
   justify-content: center;
   background-color: #333;
@@ -1846,8 +1846,8 @@ button:hover {
   }
 
   .crucigrama-grid {
-    grid-template-columns: repeat(15, 25px);
-    grid-template-rows: repeat(15, 25px);
+    grid-template-columns: repeat(16, 25px);
+    grid-template-rows: repeat(16, 25px);
   }
 
   .crucigrama-cell {
@@ -2190,8 +2190,8 @@ button:hover {
   }
 
   .crucigrama-grid {
-    grid-template-columns: repeat(15, 20px);
-    grid-template-rows: repeat(15, 20px);
+    grid-template-columns: repeat(16, 20px);
+    grid-template-rows: repeat(16, 20px);
     padding: 8px;
   }
 

@@ -77,34 +77,62 @@ let pareoData = getRandomPareoData();
 const crucigramaData = {
     words: [
         //Horizontales
-        { word: "HDD", clue: "Disco duro mecánico tradicional", row: 0, col: 6, direction: "horizontal" },
-        { word: "DATOS", clue: "Información procesada por una computadora", row: 1, col: 0, direction: "horizontal" },
-        { word: "BACKUP", clue: "Copia de seguridad de datos importantes", row: 1, col: 9, direction: "horizontal" },
-        { word: "RAM", clue: "Memoria volátil de acceso aleatorio", row: 4, col: 9, direction: "horizontal" },
-        { word: "HARDWARE", clue: "Componentes físicos de una computadora", row: 6, col: 3, direction: "horizontal" },
-        { word: "KERNEL", clue: "Núcleo del sistema operativo", row: 8, col: 0, direction: "horizontal" },
-        { word: "DRIVER", clue: "Software que controla dispositivos de hardware", row: 8, col: 9, direction: "horizontal" },
-        { word: "ROM", clue: "Memoria NO volátil con instrucciones de arranque", row: 10, col: 0, direction: "horizontal" },
-        { word: "GPU", clue: "Unidad de Procesamiento Gráfico para imágenes", row: 10, col: 4, direction: "horizontal" },
-        { word: "WIFI", clue: "Tecnología de red inalámbrica", row: 11, col: 7, direction: "horizontal" },
-        { word: "SISTEMA", clue: "Conjunto organizado de elementos que funcionan juntos", row: 12, col: 0, direction: "horizontal" },
-        { word: "SSD", clue: "Disco de estado sólido basado en memoria flash", row: 12, col: 11, direction: "horizontal" },
+        { word: "RED", clue: "Conjunto de dispositivos interconectados para compartir recursos y comunicarse.", row: 0, col: 1, direction: "horizontal" },
+        { word: "LATENCIA", clue: "Tiempo de retardo en la comunicación entre dispositivos.", row: 0, col: 7, direction: "horizontal" },
+        { word: "SSH", clue: "Protocolo seguro para administración remota de dispositivos.", row: 2, col: 13, direction: "horizontal" },
+        { word: "NAT", clue: "Traducción de direcciones de red; permite que múltiples dispositivos internos usen una sola IP pública.", row: 3, col: 8, direction: "horizontal" },
+        { word: "RANSOMWARE", clue: "Tipo de malware que secuestra datos y pide un rescate económico.", row: 5, col: 0, direction: "horizontal" },
+        { word: "SSID", clue: "Identificador de red utilizado en configuraciones inalámbricas.", row: 5, col: 11, direction: "horizontal" },
+        { word: "DATOS", clue: "Información que se transmite a través de una red.", row: 7, col: 0, direction: "horizontal" },
+        { word: "DNS", clue: "Protocolo que traduce nombres de dominio a direcciones IP.", row: 9, col: 0, direction: "horizontal" },
+        { word: "VLAN", clue: "Segmentación lógica de una red LAN", row: 9, col: 4, direction: "horizontal" },
+        { word: "LAN", clue: "Red de área local que conecta dispositivos en un área geográfica limitada (edificio/campus).", row: 9, col: 11, direction: "horizontal" },
+        { word: "ROUTER", clue: "Dispositivo que encamina el tráfico entre diferentes redes.", row: 11, col: 4, direction: "horizontal" },
+        { word: "HTTP", clue: "Protocolo de transferencia de hipertexto utilizado para la navegación web.", row: 12, col: 0, direction: "horizontal" },
+        { word: "TOPOLOGIA", clue: "Forma en que se diseñan o conectan los dispositivos en una red.", row: 13, col: 4, direction: "horizontal" },
+        { word: "AP", clue: "Punto de acceso inalámbrico que extiende la señal Wi-Fi.", row: 14, col: 14, direction: "horizontal" },
+        { word: "MODEM", clue: "Dispositivo que convierte señales digitales en señales analógicas y viceversa.", row: 15, col: 6, direction: "horizontal" },
+        { word: "VPN", clue: "Red privada virtual que permite la comunicación segura a través de una red pública.", row: 15, col: 12, direction: "horizontal" },
 
         //Verticales
-        { word: "CACHE", clue: "Memoria que acelera el acceso a datos recurrentes", row: 0, col: 1, direction: "vertical" },
-        { word: "MEMORIA", clue: "Es la que tiene capacidad para almacenar, retener y hacer disponible información", row: 7, col: 1, direction: "vertical" },
-        { word: "SOFTWARE", clue: "Programas y conjuntos de instrucciones que permiten a las computadoras realizar tareas específicas (lo intangible de una PC)", row: 1, col: 4, direction: "vertical" },
-        { word: "FIREWALL", clue: "Sistema de protección contra amenazas de red", row: 2, col: 7, direction: "vertical" },
-        { word: "VIRUS", clue: "Software malicioso que se adjunta a archivos", row: 10, col: 8, direction: "vertical" },
-        { word: "RED", clue: "Conexión entre múltiples dispositivos", row: 6, col: 9, direction: "vertical" },
-        { word: "MALWARE", clue: "Software malicioso que daña sistemas", row: 0, col: 10, direction: "vertical" },
-        { word: "BIOS", clue: "Sistema básico de entrada y salida", row: 7, col: 11, direction: "vertical" },
-        { word: "USB", clue: "Puerto universal en serie para dispositivos externos", row: 3, col: 13, direction: "vertical" },
-        { word: "SERVIDOR", clue: "Computadora que proporciona servicios a otras", row: 7, col: 13, direction: "vertical" },
-        { word: "CPU", clue: "Unidad Central de Procesamiento que ejecuta instrucciones", row: 0, col: 14, direction: "vertical" },
+        { word: "SEGURIDAD", clue: "Estrategias y técnicas para proteger la infraestructura de redes y datos.", row: 1, col: 0, direction: "vertical" },
+        { word: "DHCP", clue: "Protocolo que asigna direcciones IP automáticamente a los dispositivos.", row: 11, col: 0, direction: "vertical" },
+        { word: "ETHERNET", clue: "Tecnología de red cableada común que utiliza cables con conectores RJ45.", row: 0, col: 2, direction: "vertical" },
+        { word: "SWITCH", clue: "Dispositivo intermedio que conecta dispositivos dentro de una misma red local.", row: 9, col: 2, direction: "vertical" },
+        { word: "CROSSOVER", clue: "Tipo de cable Ethernet utilizado para conectar directamente dos dispositivos iguales (como dos switches).", row: 3, col: 4, direction: "vertical" },
+        { word: "TCP", clue: "Protocolo de control de transmisión que garantiza la entrega confiable de datos.", row: 13, col: 4, direction: "vertical" },
+        { word: "GATEWAY", clue: "Puerta de enlace; nodo que sirve como punto de entrada para pasar de una red a otra.", row: 1, col: 6, direction: "vertical" },
+        { word: "UTP", clue: "Cable de par trenzado no blindado.", row: 11, col: 6, direction: "vertical" },
+        { word: "SNORT", clue: "Sistema de detección de intrusos (IDS) para redes.", row: 2, col: 8, direction: "vertical" },
+        { word: "IDS", clue: "Sistema de detección de intrusos que monitorea tráfico sospechoso.", row: 7, col: 9, direction: "vertical" },
+        { word: "ESTRELLA", clue: "Topología con un switch o hub central que conecta los dispositivos.", row: 4, col: 11, direction: "vertical" },
+        { word: "IP", clue: "Protocolo de Internet que identifica dispositivos en la red.", row: 13, col: 11, direction: "vertical" },
+        { word: "IPS", clue: "Sistema de prevención de intrusos que no solo detecta, sino que bloquea ataques.", row: 0, col: 13, direction: "vertical" },
+        { word: "IPCONFIG", clue: "Comando en Windows para verificar la configuración IP.", row: 5, col: 13, direction: "vertical" },
+        { word: "MAN", clue: "Red de área metropolitana que conecta redes locales en una ciudad.", row: 13, col: 14, direction: "vertical" },
+        { word: "WAN", clue: "Red de área amplia que conecta redes locales.", row: 8, col: 15, direction: "vertical" },
     ],
-    gridSize: 15
+    gridSize: 16
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -609,13 +637,24 @@ function handleCrucigramaKeydown(event, row, col) {
     }
 
     // Si es una letra, el manejo se hace en handleCrucigramaInput
-    if (key.match(/[a-zA-Z]/)) {
+    if (/^[a-zA-Z]$/.test(key)) {
+        event.preventDefault();
+        const cellId = `cell-${row}-${col}`;
+        const value = key.toUpperCase();
+
+        event.target.value = value;
+        saveCrucigramaAnswer(cellId, value);
+        moveToNextCell(row, col);
         return;
     }
 
     // Navegación con flechas
     let newRow = row;
     let newCol = col;
+
+    if (!currentCrucigramaWord || !isPositionInWord(row, col, currentCrucigramaWord)) {
+        currentCrucigramaWord = findWordAtPosition(row, col);
+    }
 
     switch (key) {
         case 'ArrowUp':
@@ -631,9 +670,34 @@ function handleCrucigramaKeydown(event, row, col) {
             newCol = col + 1;
             break;
         case 'Backspace':
-            // Si la celda actual está vacía, ir a la anterior
-            if (!event.target.value) {
-                moveToPreviousCell(row, col);
+            event.preventDefault();
+            const cellId = `cell-${row}-${col}`;
+            const currentValue = event.target.value;
+
+            if (currentValue) {
+                // Si la celda tiene letra, solo borrar esa letra
+                event.target.value = '';
+                saveCrucigramaAnswer(cellId, '');
+                return;
+            }
+
+            // Si está vacía, mover a la celda anterior
+            if (currentCrucigramaWord && isPositionInWord(row, col, currentCrucigramaWord)) {
+                let prevRow = row;
+                let prevCol = col;
+
+                if (currentCrucigramaWord.direction === 'horizontal') {
+                    prevCol = col - 1;
+                } else {
+                    prevRow = row - 1;
+                }
+
+                const prevCell = document.getElementById(`cell-${prevRow}-${prevCol}`);
+                if (prevCell && prevCell.tagName === 'INPUT') {
+                    prevCell.focus();
+                    prevCell.value = '';
+                    saveCrucigramaAnswer(`cell-${prevRow}-${prevCol}`, '');
+                }
             }
             return;
         default:
@@ -675,7 +739,10 @@ function moveToNextCell(row, col, value) {
 
 // Función para moverse a la celda anterior
 function moveToPreviousCell(row, col) {
-    if (!currentCrucigramaWord) return;
+    if (!currentCrucigramaWord || !isPositionInWord(row, col, currentCrucigramaWord)) {
+        currentCrucigramaWord = findWordAtPosition(row, col);
+        if (!currentCrucigramaWord) return;
+    }
 
     let prevRow = row;
     let prevCol = col;
@@ -686,13 +753,9 @@ function moveToPreviousCell(row, col) {
         prevRow = row - 1;
     }
 
-    if (isPositionInWord(prevRow, prevCol, currentCrucigramaWord)) {
-        const prevCell = document.getElementById(`cell-${prevRow}-${prevCol}`);
-        if (prevCell && prevCell.tagName === 'INPUT') {
-            prevCell.focus();
-            prevCell.value = '';
-            saveCrucigramaAnswer(`cell-${prevRow}-${prevCol}`, '');
-        }
+    const prevCell = document.getElementById(`cell-${prevRow}-${prevCol}`);
+    if (prevCell && prevCell.tagName === 'INPUT') {
+        prevCell.focus();
     }
 }
 
