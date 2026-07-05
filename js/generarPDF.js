@@ -214,21 +214,31 @@ $("#btnGenerarPDF").on("click", function () {
     const tiemposGuardados = JSON.parse(localStorage.getItem("questionTimes")) || {};
     // Selección única
     const datosSeleccion = respuestasSeleccion.map((item, index) => {
-        const tiempo = tiemposGuardados.seleccionUnica?.[index] ? formatTime(tiemposGuardados.seleccionUnica[index]) : "N/A";
+        const tiempo = tiemposGuardados.seleccionUnica?.[index]
+            ? formatTime(tiemposGuardados.seleccionUnica[index])
+            : "N/A";
+        const estado = item.isCorrect ? "/" : "X";
         return [
+            estado,
             `${index + 1}. ${item.pregunta}`,
             item.respuesta,
             tiempo
         ];
     });
-    // Incluir las preguntas
+    // Para que marque la pregunta y si está la respuesta bien o mal, y el tiempo que tardó en responderla
     if (datosSeleccion.length > 0) {
         doc.text("Respuestas de selección única:", 20, y);
         y += 5;
         doc.autoTable({
             startY: y,
-            head: [["Pregunta", "Respuesta", "Tiempo"]],
+            head: [["Estado", "Pregunta", "Respuesta", "Tiempo"]],
             body: datosSeleccion,
+            didParseCell: function (data) {
+                if (data.section === "body" && data.column.index === 0) {
+                    const isCorrect = respuestasSeleccion[data.row.index]?.isCorrect;
+                    data.cell.styles.textColor = isCorrect ? [0, 128, 0] : [220, 0, 0];
+                }
+            }
         });
         y = doc.lastAutoTable.finalY + 10;
     }
@@ -264,6 +274,7 @@ $("#btnGenerarPDF").on("click", function () {
             y += 10;
         });
     }
+    
     // Práctica
     if (Object.keys(respuestasPractica).length > 0) {
         doc.text("Respuestas de práctica:", 20, y);

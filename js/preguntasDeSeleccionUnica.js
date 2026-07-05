@@ -487,12 +487,22 @@ function saveAnswer(index, value) {
     // Guardar respuesta
     let examData = JSON.parse(localStorage.getItem(EXAM_STORAGE_KEY)) || {};
     const q = window.uniqueQuestions[index];
+    const normalize = (text) => text
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .replace(/[.,]+$/g, "");
+
+    const isCorrect = normalize(value) === normalize(q.correct);
+
     if (!examData.respuestasSeleccionUnica) {
         examData.respuestasSeleccionUnica = [];
     }
     examData.respuestasSeleccionUnica[index] = {
         pregunta: q.question,
-        respuesta: value
+        respuesta: value,
+        correcta: q.correct,
+        isCorrect
     };
 
     // Guardar tiempo de pregunta actual
