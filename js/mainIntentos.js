@@ -521,7 +521,7 @@ function setupEventListeners() {
                 localStorage.setItem("pdfDescargado", "true");
                 $("#btnGenerarPDF").trigger("click");
                 // 4. Estado final de éxito
-                $btnDescargarFinal.text("¡Resumen Descargado!");
+                $btnDescargarFinal.text("¡Resumen del examen en linea descargado con su nombre!");
                 $btnDescargarFinal.css("backgroundColor", "#28a745"); // El verde sólido
                 $btnDescargarFinal.css("color", "white");
                 // El truco clave: Opacidad al 100% para que el verde no se vea "lavado"
@@ -568,7 +568,7 @@ function setupEventListeners() {
                 // --- PASO 4: Cuenta atrás final para éxito ---
                 await esperarConContador(3, "Finalizando", $btnDescargarPracticaPKA);
                 // --- PASO 5: Resultado final ---
-                $btnDescargarPracticaPKA.text("¡Archivos para práctica final descargados!");
+                $btnDescargarPracticaPKA.text("¡Los 2 archivos para práctica final descargados, revise descargas!  ");
                 $btnDescargarPracticaPKA.css("backgroundColor", "#28a745");
                 $btnDescargarPracticaPKA.css("color", "white");
                 // El truco clave: Opacidad al 100% para que el verde no se vea "lavado"

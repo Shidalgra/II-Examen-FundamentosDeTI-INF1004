@@ -609,7 +609,7 @@ label[for="agreeCheck"] {
 }
 
 .accessError {
-  color:red; 
+  color: red;
   margin-top: 10px;
 }
 
@@ -1813,6 +1813,29 @@ button:hover {
   background: #0066cc;
 }
 
+/* Permitir pointer events para arrastre en móviles sin bloquear todo el scroll */
+.sopa-container {
+  touch-action: none;
+}
+
+/* (Opcional) Resaltar visualmente celdas candidatas mientras se arrastra */
+.sopa-cell.selected {
+  background: rgba(255, 215, 0, 0.45);
+}
+
+.sopa-cell.found {
+  background: rgba(0, 150, 0, 0.25);
+  color: #fff;
+}
+
+#sopa-container,
+.sopa-cell {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
 
 
 

@@ -5,33 +5,44 @@
 let currentPracticeSection = 1;
 let pareoMatches = {};
 let crucigramaAnswers = {};
-let sopaFoundWords = [];
 let currentCrucigramaWord = null; // Para mantener la dirección de escritura
 let currentCrucigramaDirection = null; // Dirección activa seleccionada
+let sopaFoundWords = [];
+let isSopaSelecting = false;
+let sopaDragPath = []; // array de {row, col}
 
 // Datos para el pareo - Términos del examen
 const pareoDataComplete = {
     items: [
-        { palabra: "Gabinete", definicion: "pieza encargada de proteger las partes que componen a la CPU" },
-        { palabra: "CPU", definicion: "Unidad central de procesamiento, es el componente principal de cualquier dispositivo informático" },
-        { palabra: "SO", definicion: "Software fundamental que actúa como intermediario entre el hardware de una PC y los programas que se ejecutan en ella" },
-        { palabra: "MOTHERBOARD", definicion: "Circuito integrado principal del sistema informático" },
-        { palabra: "MAINFRAME", definicion: "Para grandes bases de datos y sistemas bancarios (ej. IBM Z Series)" },
-        { palabra: "LAPTOP", definicion: "Computadora compacta y movil" },
-        { palabra: "TABLET", definicion: "Pantalla táctil, sin teclado físico (iPad, Galaxy Tab)." },
-        { palabra: "RAM", definicion: "Memoria volátil de acceso aleatorio" },
-        { palabra: "SSD", definicion: "Disco de estado sólido basado en memoria flash" },
-        { palabra: "GPU", definicion: "Unidad de procesamiento gráfico para imágenes" },
-        { palabra: "ROM", definicion: "Memoria no volátil con instrucciones de arranque" },
-        { palabra: "CACHE", definicion: "Memoria que acelera el acceso a datos recurrentes" },
-        { palabra: "VRAM", definicion: "Memoria de video en tarjetas gráficas" },
-        { palabra: "HDD", definicion: "Disco duro mecánico tradicional" },
-        { palabra: "BIOS", definicion: "Sistema básico de entrada y salida" },
-        { palabra: "USB", definicion: "Puerto universal en serie para dispositivos" },
+        { palabra: "WIRESHARK", definicion: "Herramienta para analizar el tráfico de red y detectar amenazas." },
+        { palabra: "FTP", definicion: "Protocolo de RED utilizado para la transferencia de archivos." },
+        { palabra: "UTP", definicion: "Cable es una clase de cable que no se encuentra blindado." },
+        { palabra: "SFTP", definicion: "Cable laminado apantallado individual. Se le ha añadido una malla metálica LSZH(Low Smoke Zero Halogen) alrededor para aumentar el aislamiento de este cable." },
+        { palabra: "PPP", definicion: "Permite transmitir datos de manera segura en conexiones punto a punto, como en módems." },
+        { palabra: "HDLC", definicion: "Protocolo usado en redes WAN para asegurar la integridad de los datos transmitidos." },
+        { palabra: "MALLA", definicion: "Es una topología donde los dispositivos se conectan entre sí de forma descentralizada" },
+        { palabra: "ANILLO", definicion: "Topología que une los dispositivos (nodos) en un bucle cerrado, donde cada equipo se conecta exactamente a otros dos." },
+        { palabra: "HTTPS", definicion: "Es la versión segura de HTTP" },
+        { palabra: "MAC ADDRESS", definicion: "Identificador físico único de 12 caracteres (ej. 00:1A:2B:3C:4D:5E) asignado por el fabricante a cada tarjeta de red." },
+        { palabra: "MASCARA", definicion: "Combinación de 32 bits que divide una dirección IP en dos partes: el identificador de red y el identificador de host." },
+        { palabra: "PROTOCOL", definicion: "Conjunto de reglas y normas que permiten a los dispositivos comunicarse e intercambiar datos dentro de un sistema informático." },
+        { palabra: "ROUTING", definicion: "Es el proceso mediante el cual los dispositivos de red, como los routers, determinan la mejor ruta para enviar paquetes de datos desde un origen hasta su destino final. Utiliza tablas de enrutamiento y protocolos para conectar diferentes redes entre sí de manera eficiente." },
+        { palabra: "IPV4", definicion: "Protocolo de Internet con direcciones de 32 bits en formato decimal." },
+        { palabra: "IOT", definicion: "Internet de las cosas; dispositivos interconectados cotidianos." },
+        { palabra: "CIFRADO", definicion: "Protege datos transmitidos mediante protocolos seguros como TLS y VPN." },
+        { palabra: "IPV6", definicion: "Protocolo de Internet con direcciones de 128 bits en formato hexadecimal." },
+        { palabra: "PING", definicion: "Herramienta para probar la conectividad entre dispositivos." },
         { palabra: "WIFI", definicion: "Tecnología de red inalámbrica" },
         { palabra: "FIREWALL", definicion: "Sistema de protección contra amenazas de red" },
-        { palabra: "BACKUP", definicion: "Copia de seguridad de datos importantes" },
-        { palabra: "DRIVER", definicion: "Software que controla dispositivos de hardware" }
+        { palabra: "2FA", definicion: "Autenticación de doble factor; capa extra de seguridad (ej. Google Authenticator)." },
+        { palabra: "BUS", definicion: "Topología donde un solo cable conecta todos los dispositivos." },
+        { palabra: "SUBRED", definicion: "División de una red IP para optimizar su direccionamiento." },
+        { palabra: "FIBRA ÓPTICA", definicion: "Medio de transmisión que utiliza luz para transferir datos a alta velocidad." },
+        { palabra: "ICMP", definicion: "Protocolo para diagnóstico y control de errores en redes (usado por ping)." },
+        { palabra: "P2P", definicion: "Conexión punto a punto; directa entre dos dispositivos sin intermediarios." },
+        { palabra: "TOKEN", definicion: "Dispositivo o código dinámico usado para autenticación." },
+        { palabra: "INTERNET", definicion: "Red global de computadoras interconectadas mediante protocolos estándar." },
+        { palabra: "HTTPS", definicion: "Versión segura del protocolo HTTP, cifrada." }
     ]
 };
 
@@ -51,29 +62,6 @@ function getRandomPareoData() {
 
 let pareoData = getRandomPareoData();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Datos para el crucigrama - Diseño 15x15 cuadros con intersecciones reales
 const crucigramaData = {
     words: [
@@ -84,7 +72,7 @@ const crucigramaData = {
         { word: "NAT", clue: "Traducción de direcciones de red; permite que múltiples dispositivos internos usen una sola IP pública.", row: 3, col: 8, direction: "horizontal" },
         { word: "RANSOMWARE", clue: "Tipo de malware que secuestra datos y pide un rescate económico.", row: 5, col: 0, direction: "horizontal" },
         { word: "SSID", clue: "Identificador de red utilizado en configuraciones inalámbricas.", row: 5, col: 11, direction: "horizontal" },
-        { word: "DATOS", clue: "Información que se transmite a través de una red.", row: 7, col: 0, direction: "horizontal" },
+        { word: "DATOS", clue: "Información procesada por una computadora y que pueden ser transmitidos a través de una red.", row: 7, col: 0, direction: "horizontal" },
         { word: "DNS", clue: "Protocolo que traduce nombres de dominio a direcciones IP.", row: 9, col: 0, direction: "horizontal" },
         { word: "VLAN", clue: "Segmentación lógica de una red LAN", row: 9, col: 4, direction: "horizontal" },
         { word: "LAN", clue: "Red de área local que conecta dispositivos en un área geográfica limitada (edificio/campus).", row: 9, col: 11, direction: "horizontal" },
@@ -101,7 +89,7 @@ const crucigramaData = {
         { word: "ETHERNET", clue: "Tecnología de red cableada común que utiliza cables con conectores RJ45.", row: 0, col: 2, direction: "vertical" },
         { word: "SWITCH", clue: "Dispositivo intermedio que conecta dispositivos dentro de una misma red local.", row: 9, col: 2, direction: "vertical" },
         { word: "CROSSOVER", clue: "Tipo de cable Ethernet utilizado para conectar directamente dos dispositivos iguales (como dos switches).", row: 3, col: 4, direction: "vertical" },
-        { word: "TCP", clue: "Protocolo de control de transmisión que garantiza la entrega confiable de datos.", row: 13, col: 4, direction: "vertical" },
+        { word: "TCP", clue: "Protocolo de control de transmisión que garantiza la entrega confiable de datos. (#13, pero, para abajo porque no aparece el número 6 vertical)", row: 13, col: 4, direction: "vertical" },
         { word: "GATEWAY", clue: "Puerta de enlace; nodo que sirve como punto de entrada para pasar de una red a otra.", row: 1, col: 6, direction: "vertical" },
         { word: "UTP", clue: "Cable de par trenzado no blindado.", row: 11, col: 6, direction: "vertical" },
         { word: "SNORT", clue: "Sistema de detección de intrusos (IDS) para redes.", row: 2, col: 8, direction: "vertical" },
@@ -111,79 +99,33 @@ const crucigramaData = {
         { word: "IPS", clue: "Sistema de prevención de intrusos que no solo detecta, sino que bloquea ataques.", row: 0, col: 13, direction: "vertical" },
         { word: "IPCONFIG", clue: "Comando en Windows para verificar la configuración IP.", row: 5, col: 13, direction: "vertical" },
         { word: "MAN", clue: "Red de área metropolitana que conecta redes locales en una ciudad.", row: 13, col: 14, direction: "vertical" },
-        { word: "WAN", clue: "Red de área amplia que conecta redes locales.", row: 8, col: 15, direction: "vertical" },
+        { word: "WAN", clue: "Red de área amplia que conecta redes locales.", row: 8, col: 15, direction: "vertical" }
     ],
     gridSize: 16
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Palabras para la sopa de letras - Términos del examen con definiciones
+// 22 Palabras para la sopa de letras - Términos del examen con definiciones
 const sopaWordsComplete = [
-    { word: "CPU", definition: "Unidad central de procesamiento que ejecuta instrucciones" },
-    { word: "RAM", definition: "Memoria volátil de acceso aleatorio" },
-    { word: "SSD", definition: "Disco de estado sólido basado en memoria flash" },
-    { word: "GPU", definition: "Unidad de procesamiento gráfico para imágenes" },
-    { word: "USB", definition: "Puerto universal en serie para dispositivos" },
-    { word: "ROM", definition: "Memoria NO volátil con instrucciones de arranque" },
-    { word: "HDD", definition: "Disco duro mecánico tradicional" },
+    { word: "PHISHING", definition: "Intento de engaño por correo, SMS o sitios falsos para robar información." },
+    { word: "MALWARE", definition: "Software malicioso diseñado para dañar o comprometer sistemas." },
+    { word: "ANTIVIRUS", definition: "Herramienta de seguridad que protege contra amenazas conocidas." },
+    { word: "CROSSOVER", definition: "Tipo de cable Ethernet utilizado para conectar directamente dos dispositivos iguales (como dos switches)." },
+    { word: "LATENCIA", definition: "Tiempo de retardo en la comunicación entre dispositivos." },
     { word: "WIFI", definition: "Tecnología de red inalámbrica" },
-    { word: "BIOS", definition: "Sistema básico de entrada y salida" },
-    { word: "CACHE", definition: "Memoria que acelera el acceso a datos recurrentes" },
-    { word: "VIRUS", definition: "Software malicioso que se adjunta a archivos" },
-    { word: "BACKUP", definition: "Copia de seguridad de datos importantes" },
-    { word: "DRIVER", definition: "Software que controla dispositivos de hardware" },
-    { word: "KERNEL", definition: "Núcleo del sistema operativo" },
     { word: "FIREWALL", definition: "Sistema de protección contra amenazas de red" },
+    { word: "DATOS", definition: "Información procesada por una computadora y que pueden ser transmitidos a través de una red." },
+    { word: "KERNEL", definition: "Núcleo del sistema operativo" },
     { word: "MALWARE", definition: "Software malicioso que daña sistemas" },
-    { word: "HARDWARE", definition: "Componentes físicos de una computadora" },
-    { word: "SOFTWARE", definition: "Programas y conjuntos de instrucciones que permiten a las computadoras realizar tareas específicas (lo intangible de una PC)" },
-    { word: "MEMORIA", definition: "Es la que tiene capacidad para almacenar, retener y hacer disponible información" },
-    { word: "SISTEMA", definition: "Conjunto organizado de elementos que funcionan juntos" },
-    { word: "DATOS", definition: "Información procesada por una computadora" },
     { word: "RED", definition: "Conexión entre múltiples dispositivos" },
     { word: "SERVIDOR", definition: "Computadora que proporciona servicios a otras" },
-    { word: "CLIENTE", definition: "Dispositivo que solicita servicios a un servidor" }
+    { word: "CLIENTE", definition: "Dispositivo que solicita servicios a un servidor" },
+    { word: "BACKUP", definition: "Copia de seguridad de datos importantes" },
+    { word: "TOKEN", definition: "Dispositivo o código dinámico usado para autenticación." },
+    { word: "INTEGRIDAD", definition: "Garantiza que los datos no sean modificados o corrompidos durante su transmisión o almacenamiento." },
+    { word: "DISPONIBILIDAD", definition: "Asegura que la información y los servicios estén accesibles para los usuarios autorizados en todo momento." },
+    { word: "CONFIDENCIALIDAD", definition: "Protección de la información contra accesos no autorizados mediante técnicas como cifrado y autenticación." },
+    { word: "COAXIAL", definition: "(Registered Jack 45) conector estándar de 8 pines utilizado en los extremos de los cables de red Ethernet." },
+    { word: "VIRUS", definition: "Software malicioso que se adjunta a archivos" }
 ];
 
 // Función para generar sopa de letras aleatoria
@@ -592,7 +534,7 @@ function capturarPalabrasCompletas() {
     examData.respuestasPractica.crucigramaPalabras = palabrasCompletas;
     localStorage.setItem("examData", JSON.stringify(examData));
 
-        updateCrucigramaClueCompletion(palabrasCompletas);
+    updateCrucigramaClueCompletion(palabrasCompletas);
 }
 
 function updateCrucigramaClueCompletion(palabrasCompletas) {
@@ -832,6 +774,97 @@ function initSopaLetras() {
 
     container.innerHTML = grid;
 
+    // ----------------------------------------------------------------------------------
+
+    // Attach pointer handlers for drag selection (works for mouse & touch)
+    document.querySelectorAll('.sopa-cell').forEach(cell => {
+        const idParts = cell.id.split('-'); // id formato: sopa-row-col
+        const row = parseInt(idParts[1], 10);
+        const col = parseInt(idParts[2], 10);
+
+        cell.addEventListener('pointerdown', (e) => {
+            // Start selection path; DO NOT preventDefault so clicks still fire
+            isSopaSelecting = true;
+            sopaDragPath = [{ row, col }];
+            cell.classList.add('selected');
+            // Do not call setPointerCapture or preventDefault here to preserve native click/tap
+        });
+
+        cell.addEventListener('pointerenter', (e) => {
+            if (!isSopaSelecting) return;
+            const last = sopaDragPath[sopaDragPath.length - 1];
+            if (last.row === row && last.col === col) return;
+            sopaDragPath.push({ row, col });
+            // highlight incremental during drag
+            if (!cell.classList.contains('found')) cell.classList.add('selected');
+        });
+
+        cell.addEventListener('pointerup', (e) => {
+            if (!isSopaSelecting) return;
+            isSopaSelecting = false;
+            // Only treat as a drag selection if more than one cell was traversed
+            if (sopaDragPath.length > 1) {
+                const start = sopaDragPath[0];
+                const end = sopaDragPath[sopaDragPath.length - 1];
+                sopaSelection = [start, end];
+                checkSopaWord();
+                // clear temporary selected highlights (found ones remain)
+                document.querySelectorAll('.sopa-cell.selected').forEach(c => {
+                    if (!c.classList.contains('found')) c.classList.remove('selected');
+                });
+            }
+            sopaDragPath = [];
+        });
+    });
+
+    // Global pointerup in case pointer is released outside a cell
+    document.addEventListener('pointerup', () => {
+        if (!isSopaSelecting) return;
+        isSopaSelecting = false;
+        if (sopaDragPath.length > 1) {
+            const start = sopaDragPath[0];
+            const end = sopaDragPath[sopaDragPath.length - 1];
+            sopaSelection = [start, end];
+            checkSopaWord();
+            document.querySelectorAll('.sopa-cell.selected').forEach(c => {
+                if (!c.classList.contains('found')) c.classList.remove('selected');
+            });
+        }
+        sopaDragPath = [];
+    });
+
+    // Global pointerup in case pointer is released outside a cell
+    document.addEventListener('pointerup', () => {
+        if (!isSopaSelecting) return;
+        isSopaSelecting = false;
+        if (sopaDragPath.length) {
+            const start = sopaDragPath[0];
+            const end = sopaDragPath[sopaDragPath.length - 1];
+            sopaSelection = [start, end];
+            checkSopaWord();
+            document.querySelectorAll('.sopa-cell.selected').forEach(c => {
+                if (!c.classList.contains('found')) c.classList.remove('selected');
+            });
+        }
+        sopaDragPath = [];
+    });
+
+
+
+    // ----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Restaurar palabras encontradas en el grid
     restoreFoundWordsInGrid();
 
@@ -866,7 +899,12 @@ function selectSopaCell(row, col) {
 
 // Funcion para comprobar si la palabra seleccionada es correcta
 function checkSopaWord() {
-    const [start, end] = sopaSelection;
+    // const [start, end] = sopaSelection;
+    // Obtener start/end desde sopaSelection (si la selección viene como path tomamos primer/último)
+    let start = sopaSelection[0];
+    let end = sopaSelection[sopaSelection.length - 1];
+    if (!start || !end) return;
+
     let word = '';
     let wordReverse = '';
 
@@ -1033,8 +1071,8 @@ function mostrarPantallaFinalizada() {
     scrollToTop();
     window.scrollTo(top, 0);
     localStorage.setItem("pantallaFinalizadaActiva", "true");
-    document.getElementById('practice').style.display = 'none';
-    document.getElementById('mostrarPantallaFinalizada').style.display = 'block';
+    $('#practice').hide();
+    $('#mostrarPantallaFinalizada').show();
 }
 
 // Función para finalizar la práctica
