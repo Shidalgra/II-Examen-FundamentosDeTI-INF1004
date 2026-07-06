@@ -15,7 +15,7 @@ const MAX_CLEAR_USES = 1;
 const CLEAR_INTERVAL_DAYS = 1;
 // Configuración del examen
 //intentos
-const MAX_ATTEMPTS = 1000;
+const MAX_ATTEMPTS = 3;
 // cantidad de preguntas de marque con x y cuanto valen
 const UNIQUE_QUESTIONS_COUNT = 16; //20                   16 + 8 + 7 + 7 + 32 = 70    +   30 de la práctica Packet tracer
 const UNIQUE_QUESTIONS_VALUE = "1 PTS";
