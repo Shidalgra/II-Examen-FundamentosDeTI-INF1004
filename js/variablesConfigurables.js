@@ -28,7 +28,7 @@ const PRACTICE_QUESTIONS_PAREO = 7;
 const PRACTICE_QUESTIONS_SOUP = 7;
 
 // Código de acceso
-const ACCESS_CODE = "Marcela";
+const ACCESS_CODE = "MamaAmazaLaMasa";
 
 // para cada vez que llame un SweetAlert con scrollTop, se asegura de que el scroll esté arriba
 function scrollSwalArriba() {
